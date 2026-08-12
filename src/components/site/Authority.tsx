@@ -19,7 +19,7 @@ export function Authority() {
           height={1312}
           className="h-72 w-full object-cover sm:h-96 lg:h-full"
         />
-        <div className="px-5 py-14 md:px-12 lg:py-20">
+        <div className="px-5 py-14 md:px-12 lg:self-center lg:py-20">
           <h2 className="text-2xl font-medium leading-snug text-ink sm:text-3xl">
             Kdo se postará o vaši hru?
             <span className="block">Petr Vlach.</span>

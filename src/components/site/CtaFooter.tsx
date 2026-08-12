@@ -20,7 +20,7 @@ export function CtaFooter() {
           height={1008}
           className="h-64 w-full object-cover sm:h-80 lg:h-full"
         />
-        <div className="px-5 py-14 md:px-12 lg:py-20">
+        <div className="px-5 py-14 md:px-12 lg:self-center lg:py-20">
           <h2 className="text-2xl font-medium leading-snug text-ink sm:text-3xl">
             Výsledek neuvidíte na papíře.
             <span className="block">Uvidíte ho na hřišti.</span>
