@@ -31,7 +31,7 @@ export function Navbar() {
         <nav className="hidden items-center gap-8 lg:flex">
           {links.map((l) => (
             <a
-              key={l.href}
+              key={l.label}
               href={l.href}
               className="text-sm text-muted-foreground transition-colors hover:text-ink"
             >
@@ -57,7 +57,7 @@ export function Navbar() {
         <nav className="border-t border-border bg-background px-5 pb-6 pt-2 lg:hidden">
           {links.map((l) => (
             <a
-              key={l.href}
+              key={l.label}
               href={l.href}
               onClick={() => setOpen(false)}
               className="block border-b border-border/60 py-3 text-sm text-muted-foreground"
