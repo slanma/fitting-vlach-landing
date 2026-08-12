@@ -40,7 +40,7 @@ export function DeepFitting() {
       <div className="mx-auto grid max-w-7xl gap-10 px-5 py-16 md:px-10 lg:grid-cols-[0.9fr_1.4fr_1fr] lg:items-start lg:gap-12 lg:py-24">
         <div>
           <h2 className="text-2xl font-medium leading-snug text-ink sm:text-3xl">
-            Golf nehrajete v laboratoři.
+            Golf nehrajete v prodejně.
             <span className="mt-3 block text-muted-foreground">
               Proč byste tam měli vybírat hole?
             </span>
