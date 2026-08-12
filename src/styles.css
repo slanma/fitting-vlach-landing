@@ -158,5 +158,35 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
   }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+  }
+}
+
+@utility label-tech {
+  font-family: var(--font-display);
+  font-size: 0.6875rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+@utility rule-gold {
+  display: block;
+  width: 2.5rem;
+  height: 2px;
+  background: var(--gold);
+}
+
+@utility surface-sand {
+  background:
+    linear-gradient(180deg, oklch(0.985 0.012 88) 0%, oklch(0.975 0.014 85) 100%);
 }
