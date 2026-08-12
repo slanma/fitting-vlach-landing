@@ -5,7 +5,9 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import studio from "@/assets/studio-sim.jpg";
+import studioAsset from "@/assets/green-podzim.jpg.asset.json";
+
+const studio = studioAsset.url;
 
 const items = [
   {
