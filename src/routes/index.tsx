@@ -34,7 +34,6 @@ function Index() {
         <Authority />
         <ClientCards />
         <DeepFitting />
-        <section id="proces" className="sr-only" aria-hidden="true" />
         <Faq />
         <CtaFooter />
       </main>

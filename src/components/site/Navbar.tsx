@@ -6,7 +6,7 @@ const links = [
   { label: "O mně", href: "#o-mne" },
   { label: "Deep Fitting", href: "#deep-fitting" },
   { label: "Pro koho", href: "#pro-koho" },
-  { label: "Proces", href: "#proces" },
+  { label: "Proces", href: "#deep-fitting" },
   { label: "FAQ", href: "#faq" },
 ];
 
