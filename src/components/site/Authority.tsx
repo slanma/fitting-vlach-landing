@@ -31,8 +31,7 @@ export function Authority() {
             profesionály.
           </p>
           <p className="mt-5 text-[0.95rem] leading-relaxed text-muted-foreground">
-            Vím, že každý pohyb je jedinečný. Každá hůl funguje jinak. A proto mě fascinuje nejen
-            samotné hřiště — je v datech.
+            Každý švih i hůl mají svá specifika. Místo odhadů se dívám na to, co říkají reálná čísla.
           </p>
 
           <dl className="mt-10 grid gap-6 sm:grid-cols-3">
