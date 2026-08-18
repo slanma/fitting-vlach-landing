@@ -3,18 +3,18 @@ import { Flag, Activity, TrendingUp } from "lucide-react";
 const cards = [
   {
     icon: Flag,
-    title: "Začínáte, nebo vás omezuje zdraví?",
-    text: "Správně vybraná hůl vám pomůže hrát lehčeji, s menší námahou a větší jistotou. Společně najdeme sestavu, která odpovídá vašemu pohybu — a pomůže vám si golf užít naplno.",
+    title: "Začínáte a chcete investovat chytře?",
+    text: "Nenechte se vmanipulovat do nákupu plného setu, ze kterého většinu holí nevyužijete. Začněte s 1–2 holemi přesně na vaše dispozice a bag doplňujte postupně s tím, jak roste vaše jistota.",
   },
   {
     icon: Activity,
-    title: "Hrajete dlouho, ale skóre se nelepší?",
-    text: "I malá úprava v délce, lie, loftu nebo shaftu může zásadně zlepšit konzistenci, kontrolu a vzdálenost. Získáte nástroje, které promění vaše úsilí ve výsledky.",
+    title: "Hrajete dlouho, ale posun se zastavil?",
+    text: "Máte v bagu plnou výbavu, ale reálně věříte jen dvěma holím? Najdeme příčinu stagnace, odstraníme „mrtvou váhu“ a doplníme jen hole, které vám vrátí kontrolu nad hrou.",
   },
   {
     icon: TrendingUp,
     title: "Chcete ze svého švihu vymáčknout maximum?",
-    text: "Pracujeme s reálnými čísly z měření. Vyladíme každý detail sestavy tak, aby vám vracel maximum výkonu při stejné námaze.",
+    text: "Pracujeme s reálnými čísly z měření. Vyladíme každý detail sestavy tak, aby vám vracel maximum výkonu a konzistence při stejné námaze.",
     facts: [
       { label: "Effort", value: "−24 %" },
       { label: "Consistency", value: "+37 %" },
