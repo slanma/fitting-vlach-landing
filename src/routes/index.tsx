@@ -32,8 +32,9 @@ function Index() {
       <Navbar />
       <main>
         <Hero />
-        <Authority />
         <ClientCards />
+        <BagPhilosophy />
+        <Authority />
         <DeepFitting />
         <Faq />
         <CtaFooter />
