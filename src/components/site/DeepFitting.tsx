@@ -49,14 +49,14 @@ export function DeepFitting() {
           </h2>
           <span className="rule-gold mt-6" />
           <p className="mt-6 text-sm leading-relaxed text-muted-foreground">
-            Deep Fitting je proces, který jde za hranice standardních měření. Zakládám ho na tom, jak
+            Hloubkový Fitting je proces, který jde za hranice standardních měření. Zakládám ho na tom, jak
             se hýbete, jaká jsou vaše čísla a jaký máte cíl.
           </p>
           <a
             href="#kontakt"
             className="mt-7 inline-flex items-center gap-2 text-sm font-medium text-gold transition-opacity hover:opacity-75"
           >
-            Zjistit více o Deep Fittingu
+            Zjistit více o Hloubkovém Fittingu
             <ArrowRight className="h-4 w-4" />
           </a>
         </div>

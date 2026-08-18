@@ -16,8 +16,8 @@ const cards = [
     title: "Chcete ze svého švihu vymáčknout maximum?",
     text: "Pracujeme s reálnými čísly z měření. Vyladíme každý detail sestavy tak, aby vám vracel maximum výkonu a konzistence při stejné námaze.",
     facts: [
-      { label: "Effort", value: "−24 %" },
-      { label: "Consistency", value: "+37 %" },
+      { label: "", value: "" },
+      { label: "", value: "" },
     ],
   },
 ];
