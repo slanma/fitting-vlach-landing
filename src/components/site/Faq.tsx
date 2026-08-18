@@ -15,12 +15,16 @@ const faq = [
     a: "Své současné hole, golfové rukavice a obuv, ve které běžně hrajete. Vše ostatní je připraveno na místě.",
   },
   {
-    q: "Musím si postavit celý set?",
-    a: "Nemusíte. Často začínáme jedním klíčovým místem v setu a rozšiřujeme postupně podle priorit a rozpočtu.",
+    q: "Jsem začátečník, má to pro mě smysl?",
+    a: "Rozhodně ano. Správně nastavená hůl vás uchrání před kompenzací špatných návyků, usnadní učení a ušetří peníze za nákup nevhodného univerzálního setu.",
   },
   {
-    q: "Jsem začátečník, má to pro mě smysl?",
-    a: "Ano. Správně nastavená hůl usnadňuje učení a chrání vás před tím, abyste kompenzovali chyby nevhodného vybavení.",
+    q: "Musím si nechat postavit celý set najednou?",
+    a: "Vůbec ne. Naším cílem je dávat vám hole postupně. Často začínáme jednou nebo dvěma holemi a další doplňujeme až ve chvíli, kdy roste vaše výkonnost a herní potřeba.",
+  },
+  {
+    q: "Vyplatí se koupit univerzální set ve slevě nebo z bazaru?",
+    a: "Z praxe víme, že až u 90 % hotových setů z e-shopů hráči narazí na špatnou délku, nevhodný shaft nebo lie úhel. To, co se jeví jako výhodná koupě, se v čase prodraží. Postupné skládání holí na míru vám ušetří zbytečné výměny a hůl vám spolehlivě vydrží minimálně 6 let.",
   },
   {
     q: "Jsem vázán na jednu značku?",
