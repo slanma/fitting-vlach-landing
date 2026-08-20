@@ -10,6 +10,15 @@ import {
 import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
+import {
+  SITE_URL,
+  SITE_NAME,
+  SITE_TITLE,
+  SITE_DESCRIPTION,
+  SITE_LANG,
+  SITE_LOCALE,
+  OG_IMAGE,
+} from "../lib/site";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
 function NotFoundComponent() {
@@ -77,14 +86,24 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Fitting Vlach — golfový Deep Fitting" },
-      { name: "description", content: "Prémiový golfový fitting na míru s Petrem Vlachem." },
-      { name: "author", content: "Fitting Vlach" },
-      { property: "og:title", content: "Fitting Vlach — golfový Deep Fitting" },
-      { property: "og:description", content: "Prémiový golfový fitting na míru s Petrem Vlachem." },
+      { title: SITE_TITLE },
+      { name: "description", content: SITE_DESCRIPTION },
+      { name: "author", content: SITE_NAME },
+      { name: "robots", content: "index, follow, max-image-preview:large, max-snippet:-1" },
+      { property: "og:site_name", content: SITE_NAME },
+      { property: "og:title", content: SITE_TITLE },
+      { property: "og:description", content: SITE_DESCRIPTION },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: SITE_URL },
+      { property: "og:locale", content: SITE_LOCALE },
+      { property: "og:image", content: `${SITE_URL}${OG_IMAGE}` },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { property: "og:image:alt", content: SITE_TITLE },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: SITE_TITLE },
+      { name: "twitter:description", content: SITE_DESCRIPTION },
+      { name: "twitter:image", content: `${SITE_URL}${OG_IMAGE}` },
     ],
     links: [
       {
@@ -98,6 +117,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap",
       },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "canonical", href: SITE_URL },
     ],
   }),
   shellComponent: RootShell,
@@ -108,7 +128,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang={SITE_LANG}>
       <head>
         <HeadContent />
       </head>

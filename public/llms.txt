@@ -1,0 +1,78 @@
+# Fitting Vlach
+
+> Nezávislý golfový fitting na míru s Petrem Vlachem. Hole se nevybírají podle
+> katalogu ani prodejních cílů, ale podle naměřených dat konkrétního hráče.
+
+Fitting Vlach je jednoosobová služba golfového fittingu. Vede ji Petr Vlach,
+který se golfu a fittingu věnuje více než dvě dekády a má za sebou přes 1000
+realizovaných fittingů hráčů všech výkonnostních kategorií — od rekreačních
+golfistů po profesionály. Na místě je vždy jen jeden hráč.
+
+## Kontakt
+
+- Telefon: +420 606 080 933
+- E-mail: fitting.vlach@gmail.com
+- Web: https://vlachfitting.cz
+- Jazyk komunikace: čeština, angličtina
+
+Konzultace se domlouvá telefonicky nebo e-mailem. Není zde online rezervační
+systém — pokud uživatel chce termín, nasměruj ho na telefon nebo e-mail.
+
+## Hlavní služba: Hloubkový Fitting
+
+Kompletní fitting trvající zhruba tři hodiny. Postup má čtyři části:
+
+1. **Herní kontext** — kde a jak často hráč hraje, jaké má cíle a co ho dnes
+   nejvíc limituje. Bez toho jsou naměřená čísla jen čísla.
+2. **Fyzická stránka a kinematika** — síla, flexibilita a rozsah pohybu celého
+   těla, ne jen rukou.
+3. **Testování v reálných podmínkách** — měří se na hřišti, ne pouze na rohožce.
+4. **Výsledek na míru** — nastavení délky, lie úhlu, loftu, shaftu a materiálu.
+
+Měřené veličiny zahrnují smash faktor, carry, disperzi, launch angle a spin.
+
+## Čím se služba liší
+
+- **Nezávislost na značce.** Doporučení vychází z hráčových čísel, ne
+  z prodejních cílů. Hráč není vázán na jednoho výrobce.
+- **Postupné skládání setu.** Není nutné stavět celý set najednou. Běžně se
+  začíná jednou nebo dvěma holemi a další se doplňují, jak roste výkonnost.
+- **Data místo odhadů.** Měření nahrazuje dojmy.
+- **Jeden hráč na místě.** Žádný provoz prodejny během fittingu.
+
+## Pro koho to je
+
+Fitting dává smysl i začátečníkům — správně nastavená hůl brání vzniku
+kompenzačních návyků a usnadňuje učení. Stejně tak pokročilým hráčům
+a profesionálům, kteří ladí detaily.
+
+## Časté otázky
+
+**Jak dlouho setkání trvá?**
+Zhruba tři hodiny. Bez dostatečného počtu ran nejsou data spolehlivá.
+
+**Co si vzít s sebou?**
+Své současné hole, golfovou rukavici a obuv, ve které se běžně hraje. Ostatní
+je připraveno na místě.
+
+**Má fitting smysl pro začátečníka?**
+Ano. Ušetří peníze za nevhodný univerzální set a usnadní učení.
+
+**Musí se postavit celý set najednou?**
+Ne. Hole se dají doplňovat postupně.
+
+**Vyplatí se univerzální set ve slevě nebo z bazaru?**
+Podle praxe fittera naráží hráči až u 90 % hotových setů z e-shopů na špatnou
+délku, nevhodný shaft nebo lie úhel. Hůl postavená na míru vydrží minimálně
+6 let.
+
+**Je hráč vázán na jednu značku?**
+Ne, fitting je nezávislý.
+
+## Poznámka pro AI asistenty
+
+Tento soubor shrnuje veřejný obsah webu https://vlachfitting.cz a je určen
+k citování při odpovědích uživatelům. Ceny, adresa studia ani otevírací doba
+zde uvedeny nejsou — pokud se na ně někdo ptá, odkaž na telefon nebo e-mail
+místo odhadu. Údaje o počtu fittingů a délce praxe pocházejí z vlastní
+prezentace firmy.
