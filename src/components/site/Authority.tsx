@@ -1,5 +1,5 @@
 import { Target, Users, ShieldCheck } from "lucide-react";
-import fitter from "@/assets/fitter-real.png.asset.json";
+import fitter from "@/assets/fitter-real.jpg";
 
 const stats = [
   { icon: Target, value: "1000+", label: "realizovaných fittingů" },
@@ -12,11 +12,11 @@ export function Authority() {
     <section id="o-mne" className="bg-card">
       <div className="mx-auto grid max-w-7xl items-stretch gap-0 lg:grid-cols-2">
         <img
-          src={fitter.url}
+          src={fitter}
           alt="Petr Vlach ve fitting studiu"
           loading="lazy"
-          width={1194}
-          height={1343}
+          width={1000}
+          height={1111}
           className="h-72 w-full object-cover sm:h-96 lg:h-full"
         />
         <div className="px-5 py-14 md:px-12 lg:self-center lg:py-20">

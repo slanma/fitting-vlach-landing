@@ -5,9 +5,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import studioAsset from "@/assets/green-podzim.jpg.asset.json";
+import studio from "@/assets/green-podzim.jpg";
 
-const studio = studioAsset.url;
 
 const items = [
   {
@@ -88,8 +87,8 @@ export function DeepFitting() {
           src={studio}
           alt="Golfový green s vlajkou u vodní překážky na podzim"
           loading="lazy"
-          width={1456}
-          height={1941}
+          width={1000}
+          height={1333}
           className="h-64 w-full object-cover lg:h-[26rem]"
         />
       </div>

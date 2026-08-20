@@ -1,6 +1,6 @@
 import { ArrowRight, FileText, Clock, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import course from "@/assets/course-sunset.jpeg.asset.json";
+import course from "@/assets/course-sunset.jpg";
 
 const perks = [
   { icon: FileText, label: "Nezávislá konzultace" },
@@ -13,11 +13,11 @@ export function CtaFooter() {
     <section id="kontakt" className="bg-card">
       <div className="mx-auto grid max-w-7xl items-stretch lg:grid-cols-2">
         <img
-          src={course.url}
+          src={course}
           alt="Golfista na hřišti při západu slunce"
           loading="lazy"
-          width={1656}
-          height={1379}
+          width={1600}
+          height={1323}
           className="h-64 w-full object-cover sm:h-80 lg:h-full"
         />
         <div className="px-5 py-14 md:px-12 lg:self-center lg:py-20">
