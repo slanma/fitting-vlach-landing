@@ -1,8 +1,8 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import QRCode from "qrcode";
 import { Button } from "@/components/ui/button";
 import { buildSpayd, accountToIban } from "@/lib/qr-platba";
+import { qrSvg } from "@/lib/qr-kod";
 import { BANK_ACCOUNTS, PAYMENT_DUE_DAYS } from "@/lib/shop";
 
 export const Route = createFileRoute("/platba")({
@@ -24,7 +24,6 @@ function Page() {
   const [vs, setVs] = useState("");
   const [message, setMessage] = useState("");
   const [withDueDate, setWithDueDate] = useState(true);
-  const [dataUrl, setDataUrl] = useState<string | null>(null);
 
   const useCustom = accountId === "__vlastni";
   const picked = BANK_ACCOUNTS.find((a) => a.id === accountId);
@@ -53,19 +52,9 @@ function Page() {
         })
       : null;
 
-  useEffect(() => {
-    if (!spayd) {
-      setDataUrl(null);
-      return;
-    }
-    let alive = true;
-    QRCode.toDataURL(spayd, { margin: 1, width: 320, errorCorrectionLevel: "M" })
-      .then((url) => alive && setDataUrl(url))
-      .catch(() => alive && setDataUrl(null));
-    return () => {
-      alive = false;
-    };
-  }, [spayd]);
+  // QR se počítá přímo z řetězce, žádná knihovna ani načítání.
+  const svg = spayd ? qrSvg(spayd, 320) : null;
+  const svgHref = svg ? `data:image/svg+xml;utf8,${encodeURIComponent(svg)}` : null;
 
   const field = "h-10 w-full rounded-sm border border-border bg-card px-3 text-sm";
 
@@ -198,10 +187,10 @@ function Page() {
               </p>
             )}
 
-            {dataUrl ? (
+            {svgHref ? (
               <>
                 <img
-                  src={dataUrl}
+                  src={svgHref}
                   alt="QR platba"
                   width={320}
                   height={320}
@@ -222,7 +211,7 @@ function Page() {
                   </div>
                 </dl>
                 <Button asChild variant="outline" className="w-full">
-                  <a href={dataUrl} download={`qr-platba-${vs || "bez-vs"}.png`}>
+                  <a href={svgHref} download={`qr-platba-${vs || "bez-vs"}.svg`}>
                     Stáhnout QR kód
                   </a>
                 </Button>
