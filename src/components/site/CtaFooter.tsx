@@ -1,6 +1,7 @@
-import { ArrowRight, FileText, Clock, CheckCircle2 } from "lucide-react";
+import { Phone, Mail, FileText, Clock, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import course from "@/assets/course-sunset.jpg";
+import { PHONE_DISPLAY, PHONE_HREF, EMAIL, EMAIL_HREF } from "@/lib/contact";
 
 const perks = [
   { icon: FileText, label: "Nezávislá konzultace" },
@@ -29,12 +30,29 @@ export function CtaFooter() {
             Jestliže na prvním odpališti cítíte, že hůl sedí a míč letí tam, kam má — to je ten
             pocit, o který při fittingu běží.
           </p>
-          <Button asChild size="lg" className="mt-9 w-full sm:w-auto">
-            <a href="mailto:info@fittingvlach.cz">
-              Domluvit osobní konzultaci
-              <ArrowRight className="h-4 w-4" />
+          <p className="mt-9 text-sm font-medium text-ink">Domluvte si osobní konzultaci</p>
+
+          <div className="mt-4 flex flex-col gap-3 sm:flex-row">
+            <Button asChild size="lg" className="w-full sm:w-auto">
+              <a href={PHONE_HREF} aria-label={`Zavolat na ${PHONE_DISPLAY}`}>
+                <Phone className="h-4 w-4" strokeWidth={1.75} />
+                {PHONE_DISPLAY}
+              </a>
+            </Button>
+            <Button asChild size="lg" variant="outline" className="w-full sm:w-auto">
+              <a href={EMAIL_HREF} aria-label={`Napsat e-mail na ${EMAIL}`}>
+                <Mail className="h-4 w-4" strokeWidth={1.75} />
+                Napsat e-mail
+              </a>
+            </Button>
+          </div>
+
+          <p className="mt-4 text-xs text-muted-foreground">
+            Nebo napište přímo na{" "}
+            <a href={EMAIL_HREF} className="text-ink underline underline-offset-4">
+              {EMAIL}
             </a>
-          </Button>
+          </p>
 
           <ul className="mt-10 grid gap-4 border-t border-border pt-7 sm:grid-cols-3">
             {perks.map((p) => (
