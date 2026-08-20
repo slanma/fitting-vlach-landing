@@ -51,5 +51,6 @@ Allow: /
 
 User-agent: *
 Allow: /
+Disallow: /platba
 
 Sitemap: https://vlachfitting.cz/sitemap.xml

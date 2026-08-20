@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ObchodniPodminkyRouteImport } from './routes/obchodni-podminky'
 import { Route as OchranaOsobnichUdajuRouteImport } from './routes/ochrana-osobnich-udaju'
+import { Route as PlatbaRouteImport } from './routes/platba'
 import { Route as EshopIndexRouteImport } from './routes/eshop/index'
 import { Route as EshopSlugRouteImport } from './routes/eshop/$slug'
 
@@ -30,6 +31,11 @@ const OchranaOsobnichUdajuRoute = OchranaOsobnichUdajuRouteImport.update({
   path: '/ochrana-osobnich-udaju',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PlatbaRoute = PlatbaRouteImport.update({
+  id: '/platba',
+  path: '/platba',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const EshopIndexRoute = EshopIndexRouteImport.update({
   id: '/eshop/',
   path: '/eshop/',
@@ -45,6 +51,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/obchodni-podminky': typeof ObchodniPodminkyRoute
   '/ochrana-osobnich-udaju': typeof OchranaOsobnichUdajuRoute
+  '/platba': typeof PlatbaRoute
   '/eshop/$slug': typeof EshopSlugRoute
   '/eshop/': typeof EshopIndexRoute
 }
@@ -52,6 +59,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/obchodni-podminky': typeof ObchodniPodminkyRoute
   '/ochrana-osobnich-udaju': typeof OchranaOsobnichUdajuRoute
+  '/platba': typeof PlatbaRoute
   '/eshop/$slug': typeof EshopSlugRoute
   '/eshop': typeof EshopIndexRoute
 }
@@ -60,6 +68,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/obchodni-podminky': typeof ObchodniPodminkyRoute
   '/ochrana-osobnich-udaju': typeof OchranaOsobnichUdajuRoute
+  '/platba': typeof PlatbaRoute
   '/eshop/$slug': typeof EshopSlugRoute
   '/eshop/': typeof EshopIndexRoute
 }
@@ -69,6 +78,7 @@ export interface FileRouteTypes {
     | '/'
     | '/obchodni-podminky'
     | '/ochrana-osobnich-udaju'
+    | '/platba'
     | '/eshop/$slug'
     | '/eshop/'
   fileRoutesByTo: FileRoutesByTo
@@ -76,6 +86,7 @@ export interface FileRouteTypes {
     | '/'
     | '/obchodni-podminky'
     | '/ochrana-osobnich-udaju'
+    | '/platba'
     | '/eshop/$slug'
     | '/eshop'
   id:
@@ -83,6 +94,7 @@ export interface FileRouteTypes {
     | '/'
     | '/obchodni-podminky'
     | '/ochrana-osobnich-udaju'
+    | '/platba'
     | '/eshop/$slug'
     | '/eshop/'
   fileRoutesById: FileRoutesById
@@ -91,6 +103,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ObchodniPodminkyRoute: typeof ObchodniPodminkyRoute
   OchranaOsobnichUdajuRoute: typeof OchranaOsobnichUdajuRoute
+  PlatbaRoute: typeof PlatbaRoute
   EshopSlugRoute: typeof EshopSlugRoute
   EshopIndexRoute: typeof EshopIndexRoute
 }
@@ -118,6 +131,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OchranaOsobnichUdajuRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/platba': {
+      id: '/platba'
+      path: '/platba'
+      fullPath: '/platba'
+      preLoaderRoute: typeof PlatbaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/eshop/': {
       id: '/eshop/'
       path: '/eshop'
@@ -139,6 +159,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ObchodniPodminkyRoute: ObchodniPodminkyRoute,
   OchranaOsobnichUdajuRoute: OchranaOsobnichUdajuRoute,
+  PlatbaRoute: PlatbaRoute,
   EshopSlugRoute: EshopSlugRoute,
   EshopIndexRoute: EshopIndexRoute,
 }

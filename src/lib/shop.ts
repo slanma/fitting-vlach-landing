@@ -5,11 +5,27 @@
  * příslušnou část nezobrazí nebo upozorní, místo aby ukazoval nesmysl.
  */
 
-/** Bankovní účet ve tvaru `předčíslí-číslo/kód` nebo `číslo/kód`. */
-export const BANK_ACCOUNT: string | null = null; // DOPLNIT, např. "2601234567/2010"
+export type BankAccount = {
+  id: string;
+  /** Popisek, který uvidíš při výběru — ne zákazník. */
+  label: string;
+  /** Číslo účtu ve tvaru `předčíslí-číslo/kód` nebo `číslo/kód`. */
+  account: string;
+  recipient: string;
+};
 
-/** Jméno příjemce platby v QR kódu. */
-export const BANK_RECIPIENT: string | null = null; // DOPLNIT
+/**
+ * Účty, ze kterých si vybíráš při vytváření QR platby na stránce /platba.
+ * Přidej si jich kolik chceš — první v pořadí je předvybraný.
+ *
+ * Pozor: čísla účtů se dostanou do veřejného kódu stránky. U bankovního
+ * účtu to nevadí (stejně ho posíláš na faktuře), ale nedávej sem nic,
+ * co nemá být veřejné.
+ */
+export const BANK_ACCOUNTS: BankAccount[] = [
+  // { id: "hlavni", label: "Hlavní účet (Fio)", account: "2601234567/2010", recipient: "Ing. Petr Vlach" },
+  // { id: "druhy",  label: "Druhý účet",        account: "123456-7890123456/0300", recipient: "Ing. Petr Vlach" },
+];
 
 /**
  * Je prodávající plátce DPH?

@@ -6,9 +6,8 @@ import { formatPrice } from "@/data/eshop";
 import { DELIVERY, ORDER_PREFIX, VAT_PAYER } from "@/lib/shop";
 import { newOrderNumber } from "@/lib/qr-platba";
 import { EMAIL, PHONE_DISPLAY } from "@/lib/contact";
-import { QrPlatba } from "./QrPlatba";
 
-type Placed = { order: string; vs: string; total: number; provisional: boolean };
+type Placed = { order: string; provisional: boolean };
 
 export function CartSheet() {
   const cart = useCart();
@@ -73,7 +72,7 @@ export function CartSheet() {
       `mailto:${EMAIL}?subject=${encodeURIComponent(`Objednávka ${order}`)}` +
       `&body=${encodeURIComponent(summary(order))}`;
     window.location.href = href;
-    setPlaced({ order, vs, total, provisional: cart.hasMadeToOrder });
+    setPlaced({ order, provisional: cart.hasMadeToOrder });
   }
 
   return (
@@ -105,12 +104,18 @@ export function CartSheet() {
               Objednávka <strong className="text-ink">{placed.order}</strong> je na cestě e-mailem.
               Ozveme se vám a potvrdíme dostupnost i termín.
             </p>
-            <QrPlatba
-              amount={placed.total}
-              variableSymbol={placed.vs}
-              message={`Objednavka ${placed.order}`}
-              provisional={placed.provisional}
-            />
+            {placed.provisional ? (
+              <p className="rounded-sm border border-gold/40 bg-gold/5 p-3 text-xs leading-relaxed text-ink">
+                Objednávka obsahuje zboží stavěné na míru. Nejdřív s vámi projdeme konfiguraci a
+                potvrdíme konečnou cenu —{" "}
+                <strong>teprve potom vám pošleme platební údaje včetně QR kódu</strong>. Zatím
+                prosím nic neplaťte.
+              </p>
+            ) : (
+              <p className="text-sm leading-relaxed text-muted-foreground">
+                Platební údaje včetně QR kódu vám pošleme e-mailem spolu s potvrzením objednávky.
+              </p>
+            )}
             <p className="text-xs text-muted-foreground">
               Nedorazil e-mail? Zavolejte na {PHONE_DISPLAY}.
             </p>
