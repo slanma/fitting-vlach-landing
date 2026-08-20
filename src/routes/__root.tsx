@@ -20,6 +20,8 @@ import {
   OG_IMAGE,
 } from "../lib/site";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { CartProvider } from "../lib/cart";
+import { CartSheet } from "../components/site/eshop/CartSheet";
 
 function NotFoundComponent() {
   return (
@@ -145,8 +147,11 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
+      <CartProvider>
+        {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+        <Outlet />
+        <CartSheet />
+      </CartProvider>
     </QueryClientProvider>
   );
 }

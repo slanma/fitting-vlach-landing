@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://vlachfitting.cz/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>1.0</priority>
-  </url>
+  <url><loc>https://vlachfitting.cz/</loc><changefreq>monthly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://vlachfitting.cz/eshop</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://vlachfitting.cz/eshop/ping-zeleza-na-miru</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://vlachfitting.cz/eshop/ping-driver-na-miru</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://vlachfitting.cz/eshop/golfova-rukavice</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://vlachfitting.cz/obchodni-podminky</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://vlachfitting.cz/ochrana-osobnich-udaju</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
 </urlset>

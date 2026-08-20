@@ -9,6 +9,7 @@ import { BagPhilosophy } from "@/components/site/BagPhilosophy";
 import { DeepFitting } from "@/components/site/DeepFitting";
 import { Faq } from "@/components/site/Faq";
 import { CtaFooter } from "@/components/site/CtaFooter";
+import { SiteFooter } from "@/components/site/SiteFooter";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -42,6 +43,7 @@ function Index() {
         <Faq />
         <CtaFooter />
       </main>
+      <SiteFooter />
     </div>
   );
 }

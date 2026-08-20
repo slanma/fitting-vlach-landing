@@ -2,6 +2,7 @@ import { Phone, Mail, FileText, Clock, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import course from "@/assets/course-sunset.jpg";
 import { PHONE_DISPLAY, PHONE_HREF, EMAIL, EMAIL_HREF } from "@/lib/contact";
+import { ADDRESS, BY_APPOINTMENT_NOTE } from "@/lib/site";
 
 const perks = [
   { icon: FileText, label: "Nezávislá konzultace" },
@@ -54,6 +55,16 @@ export function CtaFooter() {
             </a>
           </p>
 
+          {ADDRESS && (
+            <address className="mt-6 not-italic text-xs leading-relaxed text-muted-foreground">
+              <span className="block text-ink">{ADDRESS.streetAddress}</span>
+              <span className="block">
+                {ADDRESS.postalCode} {ADDRESS.addressLocality}
+              </span>
+              <span className="mt-2 block">{BY_APPOINTMENT_NOTE}</span>
+            </address>
+          )}
+
           <ul className="mt-10 grid gap-4 border-t border-border pt-7 sm:grid-cols-3">
             {perks.map((p) => (
               <li key={p.label} className="flex items-start gap-3">
@@ -64,20 +75,6 @@ export function CtaFooter() {
               </li>
             ))}
           </ul>
-        </div>
-      </div>
-
-      <div className="border-t border-border">
-        <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-5 py-7 md:px-10">
-          <div className="flex min-w-0 items-center gap-3">
-            <span className="shrink-0 font-display text-lg text-ink">FV</span>
-            <span className="truncate font-display text-xs uppercase tracking-[0.16em] text-muted-foreground">
-              Fitting Vlach
-            </span>
-          </div>
-          <span className="text-xs text-muted-foreground">
-            © {new Date().getFullYear()} Fitting Vlach
-          </span>
         </div>
       </div>
     </section>

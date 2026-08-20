@@ -18,6 +18,14 @@ export const SITE_NAME = "Fitting Vlach";
 export const SITE_LOCALE = "cs_CZ";
 export const SITE_LANG = "cs";
 
+/**
+ * Dřívější název téhož subjektu (stejné IČO, stejná provozovna).
+ * Jde do JSON-LD jako `alternateName`, aby vyhledávače a AI modely spojily
+ * starší zmínky, recenze a odkazy na FreeGolf s novou značkou.
+ * Až vazba doslouží (řádově roky), stačí smazat.
+ */
+export const FORMER_NAME: string | null = "FreeGolf";
+
 export const PERSON_NAME = "Petr Vlach";
 export const PERSON_JOB_TITLE = "Golfový fitter";
 
@@ -35,26 +43,44 @@ export const CONTACT = {
 
 /**
  * ---------------------------------------------------------------------------
- * NEVYPLNĚNO — doplnit reálné údaje, teprve pak se objeví ve strukturovaných datech
+ * Údaje o provozovně a subjektu
  * ---------------------------------------------------------------------------
  */
 
-/** Adresa studia, kde fitting probíhá. */
+/**
+ * ADRESA PROVOZOVNY — místo, kde fitting reálně probíhá.
+ *
+ * POZOR: tohle NENÍ sídlo podnikatele. U fyzické osoby je sídlo v rejstříku
+ * zpravidla adresa bydliště a na web, do map ani do JSON-LD nepatří.
+ * Sem patří výhradně provozovna, kam mají zákazníci přijít.
+ */
 export const ADDRESS: {
   streetAddress: string;
   addressLocality: string;
   postalCode: string;
   addressRegion: string | null;
   addressCountry: string;
-} | null = null;
+} | null = {
+  streetAddress: "Paskovská 636/275",
+  addressLocality: "Ostrava-Hrabová",
+  postalCode: "720 00",
+  addressRegion: "Moravskoslezský kraj",
+  addressCountry: "CZ",
+};
 
-/** Zeměpisné souřadnice studia — pomáhají lokálnímu vyhledávání. */
+/**
+ * Zeměpisné souřadnice provozovny.
+ * DOPLNIT: na mapy.cz klikni pravým na vchod → „Co je zde?" → zkopíruj čísla.
+ * Nechávám prázdné — odhadnuté souřadnice pošlou zákazníky na špatné místo.
+ */
 export const GEO: { latitude: number; longitude: number } | null = null;
 
 /**
- * Otevírací doba, např.:
- * [{ days: ["Monday", "Tuesday"], opens: "09:00", closes: "18:00" }]
- * U fittingu na objednávku klidně nech `null` a spoléhej na telefon.
+ * Otevírací doba se NEPUBLIKUJE ve strukturovaných datech záměrně.
+ * Provoz je individuální: v zimě zhruba 8:00–14:00, v sezóně bývá fitter
+ * na hřišti nebo drivingu a v provozovně nemusí být vůbec. Pevná doba
+ * v JSON-LD by posílala lidi před zavřené dveře a Google by ji zobrazoval
+ * jako závaznou. Místo toho komunikujeme „po předchozí domluvě".
  */
 export const OPENING_HOURS: Array<{
   days: string[];
@@ -62,17 +88,45 @@ export const OPENING_HOURS: Array<{
   closes: string;
 }> | null = null;
 
-/** IČO — v JSON-LD jako identifikátor firmy. */
-export const COMPANY_ID: string | null = null;
+/** Viditelná i strojově čitelná formulace režimu provozu. */
+export const BY_APPOINTMENT_NOTE =
+  "Návštěva vždy po předchozí telefonické domluvě. Provozní doba se v průběhu roku mění — v sezóně bývám na hřišti nebo drivingu.";
 
-/** Oficiální název subjektu, pokud se liší od značky. */
-export const LEGAL_NAME: string | null = null;
+/**
+ * SÍDLO PODNIKATELE podle rejstříku — záměrně `null`.
+ *
+ * Nepoužívej ho v JSON-LD, v mapách ani v kontaktní sekci: `LocalBusiness.address`
+ * znamená „kde firmu najdu", což je provozovna výše. Sídlo je potřeba jedině
+ * v identifikačních údajích prodávajícího na právních stránkách e-shopu
+ * (obchodní podmínky, reklamační řád). Až se e-shop bude spouštět, doplň ho
+ * TAM — do vlastní proměnné a vlastní komponenty, nikdy ne do `ADDRESS`.
+ */
+export const REGISTERED_SEAT: {
+  streetAddress: string;
+  addressLocality: string;
+  postalCode: string;
+  addressCountry: string;
+} | null = null;
 
-/** Cenové rozpětí ve tvaru "$$" až "$$$$", nebo `null`. */
+/** IČO. */
+export const COMPANY_ID: string | null = "46121706";
+
+/** Název subjektu podle rejstříku. */
+export const LEGAL_NAME: string | null = "Ing. Petr Vlach";
+
+/**
+ * DIČ se ve strukturovaných datech NEUVÁDÍ.
+ * U fyzické osoby je odvozené od rodného čísla, takže by web zveřejnil
+ * i datum narození. Na faktury a do patičky obchodních podmínek patří,
+ * do JSON-LD pro roboty ne. Když ho tam přesto chceš, vyplň a doplní se.
+ */
+export const VAT_ID: string | null = null;
+
+/** Cena fittingu se záměrně neuvádí — cíl je poptávka, ne filtrování cenou. */
 export const PRICE_RANGE: string | null = null;
 
-/** Profily na sociálních sítích a v katalozích (Facebook, Instagram, Google profil…). */
+/** Sociální sítě — doplnit až budou profily hotové (Facebook, Instagram). */
 export const SOCIAL_PROFILES: string[] = [];
 
-/** Oblast, kam se za klienty jezdí / odkud klienti jezdí. */
-export const AREA_SERVED: string[] = ["Česko"];
+/** Oblast působnosti. */
+export const AREA_SERVED: string[] = ["Ostrava", "Moravskoslezský kraj", "Česko"];
