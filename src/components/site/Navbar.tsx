@@ -4,12 +4,17 @@ import { Link } from "@tanstack/react-router";
 import { useCart } from "@/lib/cart";
 import { Button } from "@/components/ui/button";
 
+/**
+ * Sekce žijí na domovské stránce, proto se odkazuje přes `to="/"` s kotvou.
+ * Obyčejné `#kotva` by na e-shopu ani na právních stránkách nefungovalo —
+ * tam totiž žádná taková sekce není.
+ */
 const links = [
-  { label: "O mně", href: "#o-mne" },
-  { label: "Hloubkový Fitting", href: "#deep-fitting" },
-  { label: "Pro koho", href: "#pro-koho" },
-  { label: "Proces", href: "#deep-fitting" },
-  { label: "FAQ", href: "#faq" },
+  { label: "O mně", hash: "o-mne" },
+  { label: "Hloubkový fitting", hash: "hloubkovy-fitting" },
+  { label: "Pro koho", hash: "pro-koho" },
+  { label: "Proces", hash: "hloubkovy-fitting" },
+  { label: "FAQ", hash: "faq" },
 ];
 
 export function Navbar() {
@@ -19,27 +24,28 @@ export function Navbar() {
   return (
     <header className="sticky top-0 z-50 border-b border-border/70 bg-background/85 backdrop-blur-md">
       <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-5 py-4 md:px-10">
-        <a href="#hero" className="flex min-w-0 items-center gap-3">
+        <Link to="/" hash="hero" className="flex min-w-0 items-center gap-3">
           <span className="shrink-0 font-display text-2xl leading-none tracking-tight text-ink">
             FV
           </span>
           <span className="min-w-0 border-l border-border pl-3">
             <span className="block truncate font-display text-sm font-medium uppercase tracking-[0.16em] text-ink">
-              Fitting Vlach
+              Vlach Fitting
             </span>
             <span className="label-tech block text-[0.6rem]">Golf Fitting</span>
           </span>
-        </a>
+        </Link>
 
         <nav className="hidden items-center gap-8 lg:flex">
           {links.map((l) => (
-            <a
+            <Link
               key={l.label}
-              href={l.href}
+              to="/"
+              hash={l.hash}
               className="text-sm text-muted-foreground transition-colors hover:text-ink"
             >
               {l.label}
-            </a>
+            </Link>
           ))}
           <Link
             to="/eshop"
@@ -48,7 +54,9 @@ export function Navbar() {
             E-shop
           </Link>
           <Button asChild variant="outline" size="sm">
-            <a href="#kontakt">Kontakt</a>
+            <Link to="/" hash="kontakt">
+              Kontakt
+            </Link>
           </Button>
           <button
             type="button"
@@ -78,14 +86,15 @@ export function Navbar() {
       {open && (
         <nav className="border-t border-border bg-background px-5 pb-6 pt-2 lg:hidden">
           {links.map((l) => (
-            <a
+            <Link
               key={l.label}
-              href={l.href}
+              to="/"
+              hash={l.hash}
               onClick={() => setOpen(false)}
               className="block border-b border-border/60 py-3 text-sm text-muted-foreground"
             >
               {l.label}
-            </a>
+            </Link>
           ))}
           <Link
             to="/eshop"
@@ -95,9 +104,9 @@ export function Navbar() {
             E-shop
           </Link>
           <Button asChild variant="outline" className="mt-4 w-full">
-            <a href="#kontakt" onClick={() => setOpen(false)}>
+            <Link to="/" hash="kontakt" onClick={() => setOpen(false)}>
               Kontakt
-            </a>
+            </Link>
           </Button>
         </nav>
       )}
