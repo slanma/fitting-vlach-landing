@@ -12,9 +12,9 @@ import { PHONE_DISPLAY, EMAIL } from "./contact";
  */
 
 /** Kanonická doména bez lomítka na konci. */
-export const SITE_URL = "https://vlachfitting.cz";
+export const SITE_URL = "https://www.vlachfitting.cz";
 
-export const SITE_NAME = "Fitting Vlach";
+export const SITE_NAME = "Vlach Fitting";
 export const SITE_LOCALE = "cs_CZ";
 export const SITE_LANG = "cs";
 
@@ -29,9 +29,9 @@ export const FORMER_NAME: string | null = "FreeGolf";
 export const PERSON_NAME = "Petr Vlach";
 export const PERSON_JOB_TITLE = "Golfový fitter";
 
-export const SITE_TITLE = "Fitting Vlach — golfový Deep Fitting s Petrem Vlachem";
+export const SITE_TITLE = "Vlach Fitting — hloubkový golfový fitting s Petrem Vlachem";
 export const SITE_DESCRIPTION =
-  "Prémiový golfový fitting na míru. Deep Fitting založený na datech, kinematice a testování v reálných podmínkách. Domluvte si osobní konzultaci.";
+  "Prémiový golfový fitting na míru. Hloubkový fitting založený na datech, kinematice a testování v reálných podmínkách. Domluvte si osobní konzultaci.";
 
 /** Náhledový obrázek pro sdílení (1200×630), leží v public/. */
 export const OG_IMAGE = "/og-image.jpg";

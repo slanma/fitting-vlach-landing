@@ -7,7 +7,7 @@
 export const faq = [
   {
     q: "Jak dlouho setkání trvá?",
-    a: "Kompletní Deep Fitting zabere zhruba tři hodiny. Nespěcháme — bez dostatku ran nejsou data spolehlivá.",
+    a: "Kompletní hloubkový fitting zabere zhruba tři hodiny. Nespěcháme — bez dostatku ran nejsou data spolehlivá.",
   },
   {
     q: "Co si mám vzít s sebou?",

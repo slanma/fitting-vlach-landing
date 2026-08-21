@@ -18,7 +18,7 @@ export const Route = createFileRoute("/eshop/$slug")({
     if (!loaderData) return {};
     return {
       meta: [
-        { title: `${loaderData.name} — Fitting Vlach` },
+        { title: `${loaderData.name} — Vlach Fitting` },
         { name: "description", content: loaderData.short },
         { property: "og:title", content: loaderData.name },
         { property: "og:description", content: loaderData.short },

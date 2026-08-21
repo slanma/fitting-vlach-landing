@@ -6,7 +6,7 @@ import { Hero } from "@/components/site/Hero";
 import { Authority } from "@/components/site/Authority";
 import { ClientCards } from "@/components/site/ClientCards";
 import { BagPhilosophy } from "@/components/site/BagPhilosophy";
-import { DeepFitting } from "@/components/site/DeepFitting";
+import { HloubkovyFitting } from "@/components/site/HloubkovyFitting";
 import { Faq } from "@/components/site/Faq";
 import { CtaFooter } from "@/components/site/CtaFooter";
 import { SiteFooter } from "@/components/site/SiteFooter";
@@ -39,7 +39,7 @@ function Index() {
         <ClientCards />
         <BagPhilosophy />
         <Authority />
-        <DeepFitting />
+        <HloubkovyFitting />
         <Faq />
         <CtaFooter />
       </main>

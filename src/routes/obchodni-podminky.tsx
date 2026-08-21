@@ -10,7 +10,7 @@ export const Route = createFileRoute("/obchodni-podminky")({
   head: () => ({
     meta: [
       { title: `Obchodní podmínky — ${SITE_NAME}` },
-      { name: "description", content: "Obchodní podmínky e-shopu Fitting Vlach." },
+      { name: "description", content: "Obchodní podmínky e-shopu Vlach Fitting." },
     ],
     links: [{ rel: "canonical", href: `${SITE_URL}/obchodni-podminky` }],
   }),
@@ -142,7 +142,25 @@ function Page() {
         </p>
       </Section>
 
-      <Section heading="8. Závěrečná ustanovení">
+      <Section heading="8. Obchodní sdělení">
+        <p>
+          Prodávající je oprávněn zasílat kupujícímu, který u něj zakoupil zboží nebo služby,
+          obchodní sdělení týkající se vlastních obdobných výrobků a služeb na e-mailovou adresu
+          poskytnutou v souvislosti s nákupem, a to na základě § 7 odst. 3 zákona č. 480/2004 Sb., o
+          některých službách informační společnosti.
+        </p>
+        <p>
+          Kupující má právo zasílání obchodních sdělení kdykoli bezplatně odmítnout, a to jak při
+          uzavření smlouvy, tak při zaslání každé jednotlivé zprávy — prostřednictvím odkazu pro
+          odhlášení v patičce e-mailu nebo zprávou na {EMAIL}.
+        </p>
+        <p>
+          Osobám, které u prodávajícího dosud nenakoupily, jsou obchodní sdělení zasílána výhradně
+          na základě předchozího souhlasu.
+        </p>
+      </Section>
+
+      <Section heading="9. Závěrečná ustanovení">
         <p>
           Vztahy neupravené těmito podmínkami se řídí českým právním řádem, zejména zákonem č.
           89/2012 Sb., občanský zákoník, a zákonem č. 634/1992 Sb., o ochraně spotřebitele.

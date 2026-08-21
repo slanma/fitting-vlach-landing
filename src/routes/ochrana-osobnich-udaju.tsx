@@ -11,7 +11,7 @@ export const Route = createFileRoute("/ochrana-osobnich-udaju")({
       { title: `Ochrana osobních údajů — ${SITE_NAME}` },
       {
         name: "description",
-        content: "Jak Fitting Vlach nakládá s osobními údaji zákazníků.",
+        content: "Jak Vlach Fitting nakládá s osobními údaji zákazníků.",
       },
     ],
     links: [{ rel: "canonical", href: `${SITE_URL}/ochrana-osobnich-udaju` }],
@@ -51,6 +51,23 @@ function Page() {
         <p>
           Domluvíte-li si fitting telefonicky nebo e-mailem, zpracováváme údaje, které nám při tom
           sdělíte, za účelem jednání o smlouvě a jejího plnění.
+        </p>
+      </Section>
+
+      <Section heading="Obchodní sdělení">
+        <p>
+          Pokud u nás nakoupíte, můžeme vám na e-mail, který jste uvedli u objednávky, posílat
+          informace o vlastních obdobných výrobcích a službách. Právním základem je oprávněný zájem
+          správce podle čl. 6 odst. 1 písm. f) GDPR ve spojení s § 7 odst. 3 zákona č. 480/2004 Sb.
+        </p>
+        <p>
+          Odběr můžete kdykoli zdarma odmítnout — už při objednávce zaškrtnutím příslušného políčka,
+          později odkazem pro odhlášení v patičce každé zprávy nebo zprávou na {EMAIL}. Odmítnutí
+          nemá žádný vliv na vyřízení objednávky.
+        </p>
+        <p>
+          Pokud jste u nás dosud nenakoupili, obchodní sdělení vám pošleme jedině s vaším předchozím
+          souhlasem. E-mailovou adresu pro tento účel uchováváme, dokud odběr neodmítnete.
         </p>
       </Section>
 
