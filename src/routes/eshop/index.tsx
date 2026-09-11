@@ -3,8 +3,9 @@ import { Navbar } from "@/components/site/Navbar";
 import { SiteFooter } from "@/components/site/SiteFooter";
 import { activeProducts, formatPrice } from "@/data/eshop";
 import { SITE_URL } from "@/lib/site";
+import { breadcrumbSchema } from "@/lib/structured-data";
 
-const title = "E-shop — Fitting Vlach";
+const title = "E-shop — Vlach Fitting";
 const description =
   "Golfové hole PING stavěné na míru a příslušenství. Konfiguraci potvrzujeme po fittingu, platba QR kódem.";
 
@@ -17,6 +18,20 @@ export const Route = createFileRoute("/eshop/")({
       { property: "og:description", content: description },
     ],
     links: [{ rel: "canonical", href: `${SITE_URL}/eshop` }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@graph": [
+            breadcrumbSchema([
+              { name: "Úvod", url: `${SITE_URL}/` },
+              { name: "E-shop", url: `${SITE_URL}/eshop` },
+            ]),
+          ],
+        }),
+      },
+    ],
   }),
   component: Eshop,
 });

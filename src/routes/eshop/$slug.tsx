@@ -7,6 +7,7 @@ import { SiteFooter } from "@/components/site/SiteFooter";
 import { findProduct, formatPrice } from "@/data/eshop";
 import { useCart } from "@/lib/cart";
 import { SITE_URL } from "@/lib/site";
+import { productJsonLd } from "@/lib/structured-data";
 
 export const Route = createFileRoute("/eshop/$slug")({
   loader: ({ params }) => {
@@ -24,6 +25,7 @@ export const Route = createFileRoute("/eshop/$slug")({
         { property: "og:description", content: loaderData.short },
       ],
       links: [{ rel: "canonical", href: `${SITE_URL}/eshop/${loaderData.slug}` }],
+      scripts: [{ type: "application/ld+json", children: productJsonLd(loaderData) }],
     };
   },
   component: Detail,
