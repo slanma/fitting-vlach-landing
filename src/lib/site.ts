@@ -36,11 +36,7 @@ export const SITE_LANG = "cs";
  *
  * Až vazba doslouží (řádově roky), stačí pole vyprázdnit.
  */
-export const FORMER_NAMES: string[] = [
-  "FreeGolf",
-  "Golf Fitting Centrum Ostrava",
-  "GFCO",
-];
+export const FORMER_NAMES: string[] = ["FreeGolf", "Golf Fitting Centrum Ostrava", "GFCO"];
 
 export const PERSON_NAME = "Petr Vlach";
 export const PERSON_JOB_TITLE = "Golfový fitter";

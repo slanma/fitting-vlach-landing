@@ -28,6 +28,12 @@ function mod97(input: string): number {
  * kontrolou — raději QR nezobrazit než poslat peníze jinam.
  */
 export function accountToIban(account: string): string | null {
+  // Už je to IBAN (jak ho zadávají v administraci) — jen ověřit kontrolní číslice.
+  const compact = account.replace(/\s/g, "").toUpperCase();
+  if (/^[A-Z]{2}\d{2}[A-Z0-9]{10,30}$/.test(compact)) {
+    const rearranged = compact.slice(4) + compact.slice(0, 4);
+    return mod97(rearranged) === 1 ? compact : null;
+  }
   const m = account.trim().match(/^(?:(\d{1,6})-)?(\d{1,10})\/(\d{4})$/);
   if (!m) return null;
   const prefix = m[1] ?? "0";

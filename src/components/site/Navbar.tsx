@@ -73,14 +73,30 @@ export function Navbar() {
           </button>
         </nav>
 
-        <button
-          type="button"
-          aria-label="Otevřít menu"
-          onClick={() => setOpen((v) => !v)}
-          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-sm border border-border text-ink lg:hidden"
-        >
-          {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
-        </button>
+        <div className="flex items-center gap-2 lg:hidden">
+          <button
+            type="button"
+            aria-label={`Košík, ${cart.count} položek`}
+            onClick={() => cart.setOpen(true)}
+            className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-sm border border-border text-ink"
+          >
+            <ShoppingBag className="h-4 w-4" />
+            {cart.count > 0 && (
+              <span className="absolute -right-1.5 -top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-gold px-1 text-[0.6rem] font-medium text-background">
+                {cart.count}
+              </span>
+            )}
+          </button>
+          <button
+            type="button"
+            aria-label={open ? "Zavřít menu" : "Otevřít menu"}
+            aria-expanded={open}
+            onClick={() => setOpen((v) => !v)}
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-sm border border-border text-ink"
+          >
+            {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+          </button>
+        </div>
       </div>
 
       {open && (

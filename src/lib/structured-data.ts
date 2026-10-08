@@ -21,7 +21,8 @@ import {
   BRAND_PARTNERSHIP,
 } from "./site";
 import { faq } from "@/data/faq";
-import type { Product } from "@/data/eshop";
+import { isPurchasable, type Product } from "@/data/eshop";
+import { SELLER } from "./prodavajici";
 
 /** Vyhodí klíče s null/undefined/prázdným polem, ať schéma neobsahuje prázdná místa. */
 function clean<T extends Record<string, unknown>>(obj: T): Record<string, unknown> {
@@ -114,9 +115,7 @@ export function businessSchema() {
                 description: `Fitting, konfigurace a stavba golfových holí ${BRAND_PARTNERSHIP.brand} podle naměřených hodnot hráče — délka, lie úhel, loft, shaft i grip. ${BRAND_PARTNERSHIP.designation} Samotné doporučení zůstává nezávislé: vychází z čísel hráče, ne z prodejních cílů.`,
                 brand: { "@type": "Brand", name: BRAND_PARTNERSHIP.brand },
                 provider: { "@id": businessId },
-                startDate: BRAND_PARTNERSHIP.sinceYear
-                  ? String(BRAND_PARTNERSHIP.sinceYear)
-                  : null,
+                startDate: BRAND_PARTNERSHIP.sinceYear ? String(BRAND_PARTNERSHIP.sinceYear) : null,
               }),
             },
           ]
@@ -207,12 +206,20 @@ export function breadcrumbSchema(trail: Array<{ name: string; url: string }>) {
 /**
  * Product pro detail zboží v e-shopu.
  *
- * `offers` se zapíše jen tehdy, když je vyplněná reálná cena. Katalog má
- * zatím nuly jako placeholder a nulová cena ve strukturovaných datech je
- * horší než žádná — Google ji bere jako závaznou nabídku.
+ * `offers` se zapíše jen u zboží, které jde opravdu koupit za uvedenou cenu.
+ * U holí na míru je cena orientační a Google by ji bral jako závaznou
+ * nabídku — proto tam `offers` není.
  */
+const sellerSchema = {
+  "@type": "Organization",
+  name: SELLER.name,
+  vatID: SELLER.vatId,
+  identifier: { "@type": "PropertyValue", name: "IČO", value: SELLER.companyId },
+};
+
 export function productSchema(product: Product) {
   const url = `${SITE_URL}/eshop/${product.slug}`;
+  const prices = product.priceBy ? Object.values(product.priceBy.prices).filter((v) => v > 0) : [];
   return clean({
     "@type": "Product",
     "@id": `${url}#product`,
@@ -220,18 +227,34 @@ export function productSchema(product: Product) {
     description: product.description,
     url,
     brand: { "@type": "Brand", name: product.brand },
-    category: product.category === "hole" ? "Golfové hole" : "Golfové příslušenství",
-    offers:
-      product.price > 0
-        ? clean({
+    image: product.images?.length ? product.images.map((i) => `${SITE_URL}${i}`) : null,
+    category:
+      product.category === "hole"
+        ? "Golfové hole"
+        : product.category === "poukazy"
+          ? "Dárkové poukazy"
+          : "Golfové příslušenství",
+    offers: !isPurchasable(product)
+      ? null
+      : prices.length
+        ? {
+            "@type": "AggregateOffer",
+            url,
+            priceCurrency: "CZK",
+            lowPrice: Math.min(...prices),
+            highPrice: Math.max(...prices),
+            offerCount: prices.length,
+            availability: "https://schema.org/InStock",
+            seller: sellerSchema,
+          }
+        : {
             "@type": "Offer",
             url,
             price: product.price,
             priceCurrency: "CZK",
             availability: "https://schema.org/InStock",
-            seller: { "@id": businessId },
-          })
-        : null,
+            seller: sellerSchema,
+          },
   });
 }
 

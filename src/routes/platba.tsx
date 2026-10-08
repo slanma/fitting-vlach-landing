@@ -1,9 +1,12 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { buildSpayd, accountToIban } from "@/lib/qr-platba";
 import { qrSvg } from "@/lib/qr-kod";
-import { BANK_ACCOUNTS, PAYMENT_DUE_DAYS } from "@/lib/shop";
+import { PAYMENT_DUE_DAYS } from "@/lib/shop";
+import { getSettings } from "@/lib/admin-api";
+import { SELLER } from "@/lib/prodavajici";
+import { AdminShell } from "@/components/admin/AdminShell";
 
 export const Route = createFileRoute("/platba")({
   head: () => ({
@@ -13,11 +16,31 @@ export const Route = createFileRoute("/platba")({
       { name: "robots", content: "noindex, nofollow" },
     ],
   }),
-  component: Page,
+  component: () => (
+    <AdminShell>
+      <Page />
+    </AdminShell>
+  ),
 });
 
 function Page() {
-  const [accountId, setAccountId] = useState(BANK_ACCOUNTS[0]?.id ?? "");
+  // Účty se spravují v administraci (Nastavení → Bankovní účty).
+  const [BANK_ACCOUNTS, setAccounts] = useState<
+    { id: string; label: string; account: string; recipient: string }[]
+  >([]);
+  const [accountId, setAccountId] = useState("");
+  useEffect(() => {
+    getSettings().then((s) => {
+      const list = s.bank_accounts.map((a) => ({
+        id: a.id,
+        label: a.name,
+        account: a.account,
+        recipient: SELLER.name,
+      }));
+      setAccounts(list);
+      setAccountId((cur) => cur || list[0]?.id || "__vlastni");
+    });
+  }, []);
   const [customAccount, setCustomAccount] = useState("");
   const [customRecipient, setCustomRecipient] = useState("");
   const [amount, setAmount] = useState("");
@@ -59,8 +82,8 @@ function Page() {
   const field = "h-10 w-full rounded-sm border border-border bg-card px-3 text-sm";
 
   return (
-    <div className="min-h-screen bg-background">
-      <main className="mx-auto max-w-3xl px-5 py-12 md:px-10">
+    <div>
+      <div className="max-w-3xl">
         <span className="label-tech">Interní nástroj</span>
         <h1 className="mt-3 text-2xl font-medium text-ink">QR platba</h1>
         <span className="rule-gold mt-5" />
@@ -71,8 +94,11 @@ function Page() {
 
         {BANK_ACCOUNTS.length === 0 && (
           <p className="mt-6 rounded-sm border border-gold/40 bg-gold/5 p-4 text-xs leading-relaxed text-ink">
-            Zatím není uložený žádný účet. Můžete ho zadat ručně níže, nebo si je nechat
-            přednastavit v <code>src/lib/shop.ts</code> v poli <code>BANK_ACCOUNTS</code>.
+            Zatím není uložený žádný účet. Zadejte ho ručně níže, nebo ho přidejte v administraci v{" "}
+            <a href="/admin/nastaveni" className="underline">
+              Nastavení
+            </a>
+            .
           </p>
         )}
 
@@ -223,7 +249,7 @@ function Page() {
             )}
           </div>
         </div>
-      </main>
+      </div>
     </div>
   );
 }

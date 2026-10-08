@@ -10,33 +10,180 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ObchodniPodminkyRouteImport } from './routes/obchodni-podminky'
+import { Route as OchranaOsobnichUdajuRouteImport } from './routes/ochrana-osobnich-udaju'
+import { Route as OdstoupeniOdSmlouvyRouteImport } from './routes/odstoupeni-od-smlouvy'
+import { Route as PlatbaRouteImport } from './routes/platba'
+import { Route as AdminIndexRouteImport } from './routes/admin/index'
+import { Route as AdminNastaveniRouteImport } from './routes/admin/nastaveni'
+import { Route as AdminPoukazyRouteImport } from './routes/admin/poukazy'
+import { Route as EshopIndexRouteImport } from './routes/eshop/index'
+import { Route as EshopSlugRouteImport } from './routes/eshop/$slug'
+import { Route as EshopPruvodceRouteImport } from './routes/eshop/pruvodce'
+import { Route as PoukazCodeRouteImport } from './routes/poukaz.$code'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ObchodniPodminkyRoute = ObchodniPodminkyRouteImport.update({
+  id: '/obchodni-podminky',
+  path: '/obchodni-podminky',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OchranaOsobnichUdajuRoute = OchranaOsobnichUdajuRouteImport.update({
+  id: '/ochrana-osobnich-udaju',
+  path: '/ochrana-osobnich-udaju',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OdstoupeniOdSmlouvyRoute = OdstoupeniOdSmlouvyRouteImport.update({
+  id: '/odstoupeni-od-smlouvy',
+  path: '/odstoupeni-od-smlouvy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PlatbaRoute = PlatbaRouteImport.update({
+  id: '/platba',
+  path: '/platba',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/admin/',
+  path: '/admin/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminNastaveniRoute = AdminNastaveniRouteImport.update({
+  id: '/admin/nastaveni',
+  path: '/admin/nastaveni',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminPoukazyRoute = AdminPoukazyRouteImport.update({
+  id: '/admin/poukazy',
+  path: '/admin/poukazy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EshopIndexRoute = EshopIndexRouteImport.update({
+  id: '/eshop/',
+  path: '/eshop/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EshopSlugRoute = EshopSlugRouteImport.update({
+  id: '/eshop/$slug',
+  path: '/eshop/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EshopPruvodceRoute = EshopPruvodceRouteImport.update({
+  id: '/eshop/pruvodce',
+  path: '/eshop/pruvodce',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PoukazCodeRoute = PoukazCodeRouteImport.update({
+  id: '/poukaz/$code',
+  path: '/poukaz/$code',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/obchodni-podminky': typeof ObchodniPodminkyRoute
+  '/ochrana-osobnich-udaju': typeof OchranaOsobnichUdajuRoute
+  '/odstoupeni-od-smlouvy': typeof OdstoupeniOdSmlouvyRoute
+  '/platba': typeof PlatbaRoute
+  '/admin/nastaveni': typeof AdminNastaveniRoute
+  '/admin/poukazy': typeof AdminPoukazyRoute
+  '/eshop/$slug': typeof EshopSlugRoute
+  '/eshop/pruvodce': typeof EshopPruvodceRoute
+  '/poukaz/$code': typeof PoukazCodeRoute
+  '/admin/': typeof AdminIndexRoute
+  '/eshop/': typeof EshopIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/obchodni-podminky': typeof ObchodniPodminkyRoute
+  '/ochrana-osobnich-udaju': typeof OchranaOsobnichUdajuRoute
+  '/odstoupeni-od-smlouvy': typeof OdstoupeniOdSmlouvyRoute
+  '/platba': typeof PlatbaRoute
+  '/admin/nastaveni': typeof AdminNastaveniRoute
+  '/admin/poukazy': typeof AdminPoukazyRoute
+  '/eshop/$slug': typeof EshopSlugRoute
+  '/eshop/pruvodce': typeof EshopPruvodceRoute
+  '/poukaz/$code': typeof PoukazCodeRoute
+  '/admin': typeof AdminIndexRoute
+  '/eshop': typeof EshopIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/obchodni-podminky': typeof ObchodniPodminkyRoute
+  '/ochrana-osobnich-udaju': typeof OchranaOsobnichUdajuRoute
+  '/odstoupeni-od-smlouvy': typeof OdstoupeniOdSmlouvyRoute
+  '/platba': typeof PlatbaRoute
+  '/admin/nastaveni': typeof AdminNastaveniRoute
+  '/admin/poukazy': typeof AdminPoukazyRoute
+  '/eshop/$slug': typeof EshopSlugRoute
+  '/eshop/pruvodce': typeof EshopPruvodceRoute
+  '/poukaz/$code': typeof PoukazCodeRoute
+  '/admin/': typeof AdminIndexRoute
+  '/eshop/': typeof EshopIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/obchodni-podminky'
+    | '/ochrana-osobnich-udaju'
+    | '/odstoupeni-od-smlouvy'
+    | '/platba'
+    | '/admin/nastaveni'
+    | '/admin/poukazy'
+    | '/eshop/$slug'
+    | '/eshop/pruvodce'
+    | '/poukaz/$code'
+    | '/admin/'
+    | '/eshop/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/obchodni-podminky'
+    | '/ochrana-osobnich-udaju'
+    | '/odstoupeni-od-smlouvy'
+    | '/platba'
+    | '/admin/nastaveni'
+    | '/admin/poukazy'
+    | '/eshop/$slug'
+    | '/eshop/pruvodce'
+    | '/poukaz/$code'
+    | '/admin'
+    | '/eshop'
+  id:
+    | '__root__'
+    | '/'
+    | '/obchodni-podminky'
+    | '/ochrana-osobnich-udaju'
+    | '/odstoupeni-od-smlouvy'
+    | '/platba'
+    | '/admin/nastaveni'
+    | '/admin/poukazy'
+    | '/eshop/$slug'
+    | '/eshop/pruvodce'
+    | '/poukaz/$code'
+    | '/admin/'
+    | '/eshop/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ObchodniPodminkyRoute: typeof ObchodniPodminkyRoute
+  OchranaOsobnichUdajuRoute: typeof OchranaOsobnichUdajuRoute
+  OdstoupeniOdSmlouvyRoute: typeof OdstoupeniOdSmlouvyRoute
+  PlatbaRoute: typeof PlatbaRoute
+  AdminNastaveniRoute: typeof AdminNastaveniRoute
+  AdminPoukazyRoute: typeof AdminPoukazyRoute
+  EshopSlugRoute: typeof EshopSlugRoute
+  EshopPruvodceRoute: typeof EshopPruvodceRoute
+  PoukazCodeRoute: typeof PoukazCodeRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+  EshopIndexRoute: typeof EshopIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +195,99 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/obchodni-podminky': {
+      id: '/obchodni-podminky'
+      path: '/obchodni-podminky'
+      fullPath: '/obchodni-podminky'
+      preLoaderRoute: typeof ObchodniPodminkyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ochrana-osobnich-udaju': {
+      id: '/ochrana-osobnich-udaju'
+      path: '/ochrana-osobnich-udaju'
+      fullPath: '/ochrana-osobnich-udaju'
+      preLoaderRoute: typeof OchranaOsobnichUdajuRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/odstoupeni-od-smlouvy': {
+      id: '/odstoupeni-od-smlouvy'
+      path: '/odstoupeni-od-smlouvy'
+      fullPath: '/odstoupeni-od-smlouvy'
+      preLoaderRoute: typeof OdstoupeniOdSmlouvyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/platba': {
+      id: '/platba'
+      path: '/platba'
+      fullPath: '/platba'
+      preLoaderRoute: typeof PlatbaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/': {
+      id: '/admin/'
+      path: '/admin'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/nastaveni': {
+      id: '/admin/nastaveni'
+      path: '/admin/nastaveni'
+      fullPath: '/admin/nastaveni'
+      preLoaderRoute: typeof AdminNastaveniRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/poukazy': {
+      id: '/admin/poukazy'
+      path: '/admin/poukazy'
+      fullPath: '/admin/poukazy'
+      preLoaderRoute: typeof AdminPoukazyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/eshop/': {
+      id: '/eshop/'
+      path: '/eshop'
+      fullPath: '/eshop/'
+      preLoaderRoute: typeof EshopIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/eshop/$slug': {
+      id: '/eshop/$slug'
+      path: '/eshop/$slug'
+      fullPath: '/eshop/$slug'
+      preLoaderRoute: typeof EshopSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/eshop/pruvodce': {
+      id: '/eshop/pruvodce'
+      path: '/eshop/pruvodce'
+      fullPath: '/eshop/pruvodce'
+      preLoaderRoute: typeof EshopPruvodceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/poukaz/$code': {
+      id: '/poukaz/$code'
+      path: '/poukaz/$code'
+      fullPath: '/poukaz/$code'
+      preLoaderRoute: typeof PoukazCodeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ObchodniPodminkyRoute: ObchodniPodminkyRoute,
+  OchranaOsobnichUdajuRoute: OchranaOsobnichUdajuRoute,
+  OdstoupeniOdSmlouvyRoute: OdstoupeniOdSmlouvyRoute,
+  PlatbaRoute: PlatbaRoute,
+  AdminNastaveniRoute: AdminNastaveniRoute,
+  AdminPoukazyRoute: AdminPoukazyRoute,
+  EshopSlugRoute: EshopSlugRoute,
+  EshopPruvodceRoute: EshopPruvodceRoute,
+  PoukazCodeRoute: PoukazCodeRoute,
+  AdminIndexRoute: AdminIndexRoute,
+  EshopIndexRoute: EshopIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -8,6 +8,7 @@ import { ClientCards } from "@/components/site/ClientCards";
 import { BagPhilosophy } from "@/components/site/BagPhilosophy";
 import { HloubkovyFitting } from "@/components/site/HloubkovyFitting";
 import { Faq } from "@/components/site/Faq";
+import { ProfilTeaser } from "@/components/site/ProfilTeaser";
 import { CtaFooter } from "@/components/site/CtaFooter";
 import { SiteFooter } from "@/components/site/SiteFooter";
 
@@ -40,6 +41,7 @@ function Index() {
         <BagPhilosophy />
         <Authority />
         <HloubkovyFitting />
+        <ProfilTeaser />
         <Faq />
         <CtaFooter />
       </main>

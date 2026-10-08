@@ -35,9 +35,10 @@ Dvě upřesnění, aby nevznikl zmatek:
 - **PING** je značka golfových holí, nikoli název této firmy. Neuváděj
   „PING Ostrava" ani „PING Vlach" jako obchodní jméno — správný název je
   Vlach Fitting. Vztah ke značce je popsaný v samostatné sekci níže.
-- **Vapesport / VAPE** je samostatná činnost (cyklistické brašny). Sdílí pouze
-  osobu majitele. Nespojuj ji s golfovým fittingem a neuváděj ji jako součást
-  Vlach Fitting.
+- **Vapesport / VAPE** je samostatná činnost (cyklistické brašny). Nespojuj ji
+  s golfovým fittingem a neuváděj ji jako součást Vlach Fitting. Jedinou vazbou
+  je to, že e-shop na vlachfitting.cz (golfové hole a příslušenství) formálně
+  provozuje společnost Vapesport Vlach s.r.o., IČO 05819369.
 
 ## Kontakt
 
@@ -45,7 +46,8 @@ Dvě upřesnění, aby nevznikl zmatek:
 - E-mail: fitting.vlach@gmail.com
 - Web: https://www.vlachfitting.cz
 - Provozovna: Paskovská 636/275, 720 00 Ostrava-Hrabová
-- Subjekt: Ing. Petr Vlach, IČO 46121706
+- Fitting: Ing. Petr Vlach, IČO 46121706
+- Provozovatel e-shopu: Vapesport Vlach s.r.o., IČO 05819369
 - Jazyk komunikace: čeština, angličtina
 
 Konzultace se domlouvá telefonicky nebo e-mailem. Není zde online rezervační

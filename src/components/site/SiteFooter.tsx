@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { SITE_NAME, ADDRESS, LEGAL_NAME, COMPANY_ID } from "@/lib/site";
 import { EMAIL, EMAIL_HREF, PHONE_DISPLAY, PHONE_HREF } from "@/lib/contact";
+import { SELLER } from "@/lib/prodavajici";
 
 export function SiteFooter() {
   return (
@@ -18,8 +19,10 @@ export function SiteFooter() {
               {ADDRESS.postalCode} {ADDRESS.addressLocality}
             </address>
           )}
-          <p className="mt-3 text-xs text-muted-foreground">
-            {LEGAL_NAME}
+          <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
+            E-shop: {SELLER.name}, IČO {SELLER.companyId}
+            <br />
+            Fitting: {LEGAL_NAME}
             {COMPANY_ID ? `, IČO ${COMPANY_ID}` : ""}
           </p>
         </div>
@@ -51,6 +54,11 @@ export function SiteFooter() {
             <li>
               <Link to="/obchodni-podminky" className="hover:text-ink">
                 Obchodní podmínky
+              </Link>
+            </li>
+            <li>
+              <Link to="/odstoupeni-od-smlouvy" className="hover:text-ink">
+                Odstoupení od smlouvy
               </Link>
             </li>
             <li>

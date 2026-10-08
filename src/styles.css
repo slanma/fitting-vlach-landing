@@ -190,3 +190,34 @@
   background:
     linear-gradient(180deg, oklch(0.985 0.012 88) 0%, oklch(0.975 0.014 85) 100%);
 }
+
+/* --- Golfový profil: animace -------------------------------------------- */
+@keyframes fv-draw {
+  from { stroke-dashoffset: 120; }
+  to { stroke-dashoffset: 0; }
+}
+@keyframes fv-march {
+  to { stroke-dashoffset: -12; }
+}
+@keyframes fv-flag {
+  0%, 100% { transform: skewY(0deg) scaleX(1); }
+  50% { transform: skewY(-8deg) scaleX(0.85); }
+}
+@keyframes fv-pop {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+@keyframes fv-chosen {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.04); }
+  100% { transform: scale(1); }
+}
+.fv-draw { stroke-dashoffset: 0; }
+.group:hover .fv-draw, .group:focus-visible .fv-draw { animation: fv-draw 650ms ease-out; }
+.group:hover .fv-march { animation: fv-march 600ms linear infinite; }
+.group:hover .fv-pop { animation: fv-pop 500ms ease-in-out 2; }
+.fv-flag-wave { animation: fv-flag 900ms ease-in-out infinite; }
+.fv-chosen { animation: fv-chosen 280ms ease-out; }
+@media (prefers-reduced-motion: reduce) {
+  .group:hover .fv-draw, .group:hover .fv-march, .group:hover .fv-pop, .fv-flag-wave, .fv-chosen { animation: none; }
+}
