@@ -188,7 +188,7 @@ const FLIGHT_TIP: Record<string, { headline: string; tip: string }> = {
   },
   hook: {
     headline: "Hook doleva",
-    tip: "Hook často způsobí moc lehká nebo měkká hůl, případně špatný lie úhel. To se dá změřit.",
+    tip: "Hook často způsobí moc lehká nebo měkká hůl či příliš zavřená hlava. To se dá změřit.",
   },
   kratce: {
     headline: "Málo délky",
@@ -288,7 +288,10 @@ export function evaluate(a: ProfileAnswers): ProfileResult {
     }
     if (a.stve === "kolem") {
       const t: Record<string, { headline: string; tip: string }> = {
-        cip: { headline: "Čipy", tip: "Na čipy existuje čipr — hraje se skoro jako putter." },
+        cip: {
+          headline: "Čipy",
+          tip: "Wedge se správným loftem a bounce klouže po trávě a nehrabe — čipy pak jdou samy.",
+        },
         bunkr: {
           headline: "Bunkry",
           tip: "Wedge se správným bounce vás z písku dostane napoprvé.",
@@ -415,7 +418,7 @@ export function evaluate(a: ProfileAnswers): ProfileResult {
 
   const keyMessage =
     strong.length && weak.length
-      ? `${strong.map((x) => x.area).join(", ")} — to vám jde. ${weak[0]!.area} — tam je rezerva. To je typické: každá hůl má jinou délku, lie, loft i shaft, a stačí, aby jedna neseděla. Fitting nastaví každou zvlášť.`
+      ? `${strong.map((x) => x.area).join(", ")} — to vám jde. ${weak[0]!.area} — tam je rezerva. To je typické: každá hůl má jinou délku, loft, váhu i shaft, a stačí, aby jedna neseděla. Fitting nastaví každou zvlášť.`
       : begin
         ? "Začátek je ideální čas na fitting — naučíte se švih s holí, která vám pasuje, místo kompenzace chyb vybavení."
         : "Většina toho, co popisujete, nemusí být ve švihu, ale v holích. Na fittingu to během jednoho setkání změříme a ukážeme.";

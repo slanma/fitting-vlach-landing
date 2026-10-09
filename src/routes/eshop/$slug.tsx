@@ -1,11 +1,15 @@
 import { useState } from "react";
 import { createFileRoute, Link, notFound, redirect } from "@tanstack/react-router";
-import { ArrowLeft, Mail, Phone } from "lucide-react";
+import { ArrowLeft, Check, Mail, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Navbar } from "@/components/site/Navbar";
 import { SiteFooter } from "@/components/site/SiteFooter";
-import { findProduct, priceLabel, unitPrice, formatPrice } from "@/data/eshop";
+import { findProduct, priceLabel, unitPrice, formatPrice, isMadeToOrder } from "@/data/eshop";
 import { useCart } from "@/lib/cart";
+import { OptionPicker } from "@/components/site/eshop/OptionPicker";
+import { GloveSizeHelper } from "@/components/site/eshop/GloveSizeHelper";
+import { ProductGallery } from "@/components/site/eshop/ProductGallery";
+import { WeatherGrip } from "@/components/site/eshop/WeatherGrip";
 import { SITE_URL } from "@/lib/site";
 import { VAT_PAYER } from "@/lib/shop";
 import { EMAIL, PHONE_DISPLAY, PHONE_HREF } from "@/lib/contact";
@@ -23,7 +27,8 @@ const GUIDE_KIND: Record<string, string> = {
 const OLD_SLUGS: Record<string, string> = {
   "ping-zeleza-na-miru": "ping-zeleza",
   "ping-driver-na-miru": "ping-driver",
-  "golfova-rukavice": "golfova-rukavice-hirzl",
+  "golfova-rukavice": "hirzl-trust-control-2",
+  "golfova-rukavice-hirzl": "hirzl-trust-control-2",
 };
 
 export const Route = createFileRoute("/eshop/$slug")({
@@ -70,41 +75,71 @@ function Detail() {
           <ArrowLeft className="h-4 w-4" /> Zpět do e-shopu
         </Link>
 
-        <span className="label-tech mt-8 block">{product.brand}</span>
+        <div className="mt-8 flex items-center gap-3">
+          <span className="label-tech">{product.brand}</span>
+          {isMadeToOrder(product) && (
+            <span className="rounded-sm border border-gold/40 px-2 py-0.5 text-[0.65rem] uppercase tracking-wider text-gold">
+              Na míru
+            </span>
+          )}
+        </div>
         <h1 className="mt-3 text-2xl font-medium leading-snug text-ink sm:text-3xl">
           {product.name}
         </h1>
         <span className="rule-gold mt-5" />
         {product.images && product.images.length > 0 && (
-          <Gallery images={product.images} alt={product.name} />
+          <ProductGallery images={product.images} alt={product.name} hotspots={product.hotspots} />
         )}
         <p className="mt-6 text-[0.95rem] leading-relaxed text-muted-foreground">
           {product.description}
         </p>
+        {product.highlights && product.highlights.length > 0 && (
+          <div className="mt-8 border border-gold/40 bg-gold/5 p-5 sm:p-6">
+            {product.pitch && <p className="font-medium text-ink">{product.pitch}</p>}
+            <ul className="mt-3 space-y-3">
+              {product.highlights.map((h) => {
+                const [lead, ...rest] = h.split(" — ");
+                return (
+                  <li key={h} className="flex gap-3 text-sm leading-relaxed text-ink">
+                    <Check className="mt-0.5 h-4 w-4 shrink-0 text-gold" />
+                    <span>
+                      {rest.length ? (
+                        <>
+                          <strong className="font-medium">{lead}</strong> — {rest.join(" — ")}
+                        </>
+                      ) : (
+                        h
+                      )}
+                    </span>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        )}
 
-        <div className="mt-8 space-y-5">
+        {product.weatherGrip && <WeatherGrip />}
+
+        <div className="mt-8 space-y-8">
           {product.options.map((o) => (
-            <div key={o.label}>
-              <label htmlFor={`opt-${o.label}`} className="label-tech">
-                {o.label}
-              </label>
-              <select
-                id={`opt-${o.label}`}
-                className="mt-2 h-10 w-full rounded-sm border border-border bg-card px-3 text-sm"
+            <div key={o.label} className="space-y-4">
+              <OptionPicker
+                option={o}
                 value={config[o.label] ?? ""}
-                onChange={(e) => setConfig((c) => ({ ...c, [o.label]: e.target.value }))}
-              >
-                {o.values.map((v) => (
-                  <option key={v} value={v}>
-                    {v}
-                  </option>
-                ))}
-              </select>
+                onChange={(v) => setConfig((c) => ({ ...c, [o.label]: v }))}
+              />
+              {o.label === "Velikost" && product.sizeChart === "hirzl" && (
+                <GloveSizeHelper
+                  values={o.values}
+                  current={config[o.label] ?? ""}
+                  onPick={(v) => setConfig((c) => ({ ...c, [o.label]: v }))}
+                />
+              )}
             </div>
           ))}
         </div>
 
-        {product.madeToOrder ? (
+        {isMadeToOrder(product) ? (
           <div className="mt-8 border-t border-border pt-6">
             <span className="font-display text-xl text-ink">{priceLabel(product)}</span>
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
@@ -170,32 +205,6 @@ function Detail() {
         )}
       </main>
       <SiteFooter />
-    </div>
-  );
-}
-
-function Gallery({ images, alt }: { images: string[]; alt: string }) {
-  const [active, setActive] = useState(0);
-  return (
-    <div className="mt-8">
-      <div className="aspect-[4/3] overflow-hidden border border-border bg-card">
-        <img src={images[active]} alt={alt} className="h-full w-full object-contain p-6" />
-      </div>
-      {images.length > 1 && (
-        <div className="mt-3 flex gap-3">
-          {images.map((src, i) => (
-            <button
-              key={src}
-              type="button"
-              aria-label={`Fotka ${i + 1}`}
-              onClick={() => setActive(i)}
-              className={`h-16 w-20 overflow-hidden border bg-card ${i === active ? "border-ink" : "border-border"}`}
-            >
-              <img src={src} alt="" className="h-full w-full object-contain p-1" />
-            </button>
-          ))}
-        </div>
-      )}
     </div>
   );
 }

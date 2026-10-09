@@ -3,7 +3,7 @@ import { ArrowRight } from "lucide-react";
 import { ClubArt } from "@/components/site/eshop/Pruvodce";
 import { Navbar } from "@/components/site/Navbar";
 import { SiteFooter } from "@/components/site/SiteFooter";
-import { activeProducts, priceLabel } from "@/data/eshop";
+import { activeProducts, priceLabel, isMadeToOrder } from "@/data/eshop";
 import { SITE_URL } from "@/lib/site";
 import { breadcrumbSchema } from "@/lib/structured-data";
 
@@ -105,7 +105,7 @@ function Eshop() {
                       <Link
                         to="/eshop/$slug"
                         params={{ slug: p.slug }}
-                        className="-mx-6 -mt-6 mb-5 block aspect-[4/3] overflow-hidden border-b border-border bg-background"
+                        className="-mx-6 -mt-6 mb-5 block aspect-[4/3] overflow-hidden border-b border-border bg-white"
                       >
                         <img
                           src={p.images[0]}
@@ -120,7 +120,7 @@ function Eshop() {
                     <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">
                       {p.short}
                     </p>
-                    {p.madeToOrder && (
+                    {isMadeToOrder(p) && (
                       <span className="mt-4 self-start rounded-sm border border-gold/40 px-2 py-1 text-[0.65rem] uppercase tracking-wider text-gold">
                         Na míru
                       </span>

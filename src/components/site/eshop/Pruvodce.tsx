@@ -2,6 +2,10 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight, ExternalLink, Mail, Phone, RotateCcw, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
+  FIT_STEPS,
+  HANDS,
+  mirror,
+  type Hand,
   KINDS,
   LINES,
   QUESTIONS,
@@ -116,24 +120,28 @@ function Tile({
 export function Pruvodce({ initialKind }: { initialKind?: ClubKind | undefined }) {
   const [kind, setKind] = useState<ClubKind | null>(initialKind ?? null);
   const [line, setLine] = useState<Line | null>(null);
+  const [hand, setHand] = useState<Hand | null>(null);
   const [answers, setAnswers] = useState<Answers>({});
   const [step, setStep] = useState(0); // index otázky
   const [picked, setPicked] = useState<number | null>(null); // klik v žebříčku
 
   const questions = kind && line === "std" ? QUESTIONS[kind] : [];
-  const done = !!kind && !!line && (line !== "std" || step >= questions.length);
+  const done = !!kind && !!line && !!hand && (line !== "std" || step >= questions.length);
   const rec = useMemo(
     () => (done && kind && line ? recommend(kind, line, answers) : null),
     [done, kind, line, answers],
   );
 
-  const totalSteps = 2 + (line === "std" || !line ? (kind ? QUESTIONS[kind].length : 3) : 0);
-  const current = !kind ? 0 : !line ? 1 : 2 + Math.min(step, questions.length);
+  const totalSteps = 3 + (line === "std" || !line ? (kind ? QUESTIONS[kind].length : 3) : 0);
+  const current = !kind ? 0 : !line ? 1 : !hand ? 2 : 3 + Math.min(step, questions.length);
   const progress = done ? 100 : Math.round((current / totalSteps) * 100);
 
   function reset(keepLine = false) {
     setKind(null);
-    if (!keepLine) setLine(null);
+    if (!keepLine) {
+      setLine(null);
+      setHand(null);
+    }
     setAnswers({});
     setStep(0);
     setPicked(null);
@@ -141,8 +149,9 @@ export function Pruvodce({ initialKind }: { initialKind?: ClubKind | undefined }
 
   function back() {
     setPicked(null);
-    if (done && line !== "std") return setLine(null);
-    if (line === "std" && step > 0) return setStep(step - 1);
+    if (done && line !== "std") return setHand(null);
+    if (line === "std" && hand && step > 0) return setStep(step - 1);
+    if (hand) return setHand(null);
     if (line) return setLine(null);
     setKind(null);
   }
@@ -219,7 +228,21 @@ export function Pruvodce({ initialKind }: { initialKind?: ClubKind | undefined }
           </section>
         )}
 
-        {kind && line === "std" && !done && (
+        {kind && line && !hand && (
+          <section className="animate-in fade-in slide-in-from-right-4 duration-300">
+            <span className="label-tech">Krok 3 · {kindLabel}</span>
+            <h2 className="mt-2 text-xl font-medium text-ink sm:text-2xl">
+              Hrajete jako pravák, nebo levák?
+            </h2>
+            <div className="mt-6 grid gap-3 sm:grid-cols-3">
+              {HANDS.map((h) => (
+                <Tile key={h.id} title={h.label} hint={h.hint} onClick={() => setHand(h.id)} />
+              ))}
+            </div>
+          </section>
+        )}
+
+        {kind && line === "std" && hand && !done && (
           <section
             key={questions[step]!.id}
             className="animate-in fade-in slide-in-from-right-4 duration-300"
@@ -228,14 +251,14 @@ export function Pruvodce({ initialKind }: { initialKind?: ClubKind | undefined }
               Otázka {step + 1} z {questions.length} · {kindLabel}
             </span>
             <h2 className="mt-2 text-xl font-medium text-ink sm:text-2xl">
-              {questions[step]!.title}
+              {mirror(questions[step]!.title, hand)}
             </h2>
             <div className="mt-6 grid gap-3 sm:grid-cols-2">
               {questions[step]!.options.map((o) => (
                 <Tile
                   key={o.id}
-                  title={o.label}
-                  hint={o.hint}
+                  title={mirror(o.label, hand)}
+                  hint={o.hint && mirror(o.hint, hand)}
                   active={answers[questions[step]!.id] === o.id}
                   onClick={() => {
                     setAnswers({ ...answers, [questions[step]!.id]: o.id });
@@ -252,6 +275,7 @@ export function Pruvodce({ initialKind }: { initialKind?: ClubKind | undefined }
             rec={rec}
             kind={kind}
             line={line!}
+            hand={hand!}
             answers={answers}
             picked={picked}
             setPicked={setPicked}
@@ -263,10 +287,77 @@ export function Pruvodce({ initialKind }: { initialKind?: ClubKind | undefined }
   );
 }
 
+/** „Co doladíme na fittingu“ — hlava je hotová, ostatní kroky se měří. */
+function FitSteps({ kind }: { kind: ClubKind }) {
+  const steps = FIT_STEPS[kind];
+  const [open, setOpen] = useState(1);
+  return (
+    <div className="mt-8 border border-border bg-card p-5 sm:p-6">
+      <div className="flex flex-wrap items-baseline justify-between gap-2">
+        <h3 className="font-display text-sm uppercase tracking-[0.16em] text-ink">
+          Co doladíme na fittingu
+        </h3>
+        <span className="text-xs text-muted-foreground">
+          Hotovo 1 z {steps.length} — zbytek změříme na vašem švihu
+        </span>
+      </div>
+      <ol
+        className="mt-5 grid gap-2"
+        style={{ gridTemplateColumns: `repeat(${steps.length}, minmax(0, 1fr))` }}
+      >
+        {steps.map((st, i) => {
+          const done = i === 0;
+          const on = open === i;
+          return (
+            <li key={st.label} className="relative">
+              {i > 0 && (
+                <span
+                  aria-hidden="true"
+                  className="absolute right-1/2 top-4 h-0.5 w-full -translate-y-1/2 bg-border"
+                />
+              )}
+              <button
+                type="button"
+                onClick={() => setOpen(i)}
+                aria-expanded={on}
+                className="relative flex w-full flex-col items-center gap-1.5 text-center"
+              >
+                <span
+                  className={`flex h-8 w-8 items-center justify-center rounded-full border-2 text-xs font-medium transition-all ${
+                    done
+                      ? "border-olive bg-olive text-background"
+                      : on
+                        ? "border-gold bg-gold text-background"
+                        : "border-border bg-background text-muted-foreground hover:border-gold"
+                  }`}
+                >
+                  {done ? <Check className="h-4 w-4" /> : i + 1}
+                </span>
+                <span
+                  className={`text-[0.7rem] leading-tight sm:text-xs ${on ? "font-medium text-ink" : "text-muted-foreground"}`}
+                >
+                  {st.label}
+                </span>
+              </button>
+            </li>
+          );
+        })}
+      </ol>
+      <p
+        key={open}
+        className="animate-in fade-in mt-4 border-l-2 border-gold pl-3 text-sm leading-relaxed text-ink duration-300"
+      >
+        <strong className="font-medium">{steps[open]!.label}:</strong> {steps[open]!.text}
+      </p>
+    </div>
+  );
+}
+
 function Result({
   rec,
   kind,
   line,
+  hand,
   answers,
   picked,
   setPicked,
@@ -275,6 +366,7 @@ function Result({
   rec: ReturnType<typeof recommend>;
   kind: ClubKind;
   line: Line;
+  hand: Hand;
   answers: Answers;
   picked: number | null;
   setPicked: (i: number | null) => void;
@@ -296,12 +388,13 @@ function Result({
   const summary = [
     `Hledám: ${KINDS.find((k) => k.id === kind)?.label}`,
     `Pro: ${LINES.find((l) => l.id === line)?.label}`,
+    `Hraji jako: ${hand === "L" ? "levák" : hand === "?" ? "zatím nevím" : "pravák"}`,
     ...(line === "std"
-      ? QUESTIONS[kind].map(
-          (q) => `${q.title} ${q.options.find((o) => o.id === answers[q.id])?.label ?? "—"}`,
+      ? QUESTIONS[kind].map((q) =>
+          mirror(`${q.title} ${q.options.find((o) => o.id === answers[q.id])?.label ?? "—"}`, hand),
         )
       : []),
-    `Průvodce doporučil: ${rec.model.name}`,
+    `Výchozí model z průvodce: ${rec.model.name} (shaft, grip a další parametry doladíme na fittingu)`,
   ].join("\n");
   const mail = `mailto:${EMAIL}?subject=${encodeURIComponent(`Fitting — ${rec.model.name}`)}&body=${encodeURIComponent(
     `Dobrý den,\n\nprošel(a) jsem průvodce výběrem hole na webu:\n\n${summary}\n\nJméno:\nTelefon:\n\nDěkuji.`,
@@ -309,7 +402,9 @@ function Result({
 
   return (
     <section className="animate-in fade-in duration-500">
-      <span className="label-tech">{isRecommended ? "Doporučujeme" : "Prohlížíte"}</span>
+      <span className="label-tech">
+        {isRecommended ? "Váš výchozí model · 1. krok" : "Prohlížíte"}
+      </span>
 
       <div className="mt-4 grid gap-6 md:grid-cols-[1fr_1.1fr] md:items-center">
         <div className="relative aspect-[4/3] border border-border bg-card">
@@ -326,13 +421,26 @@ function Result({
             {shown.name}
           </h2>
           <span className="rule-gold mt-4" />
-          <p className="mt-4 text-[0.95rem] leading-relaxed text-ink">{shown.tagline}</p>
-          <p className="mt-2 text-sm text-muted-foreground">{shown.forWho}</p>
+          <p className="mt-4 text-[0.95rem] leading-relaxed text-ink">
+            {mirror(shown.tagline, hand)}
+          </p>
+          <p className="mt-2 text-sm text-muted-foreground">{mirror(shown.forWho, hand)}</p>
           {isRecommended && (
             <ul className="mt-4 space-y-2">
-              {rec.why.map((w) => (
+              {[
+                ...rec.why,
+                ...(hand === "L"
+                  ? [
+                      "PING vyrábí hole i v leváckém provedení — dostupnost tohoto modelu pro leváky ověříme.",
+                    ]
+                  : hand === "?"
+                    ? [
+                        "Jestli budete hrát jako pravák, nebo levák, vyzkoušíme na fittingu — hůl pak objednáme na správnou stranu.",
+                      ]
+                    : []),
+              ].map((w) => (
                 <li key={w} className="flex gap-2 text-sm text-ink">
-                  <Check className="mt-0.5 h-4 w-4 shrink-0 text-gold" /> {w}
+                  <Check className="mt-0.5 h-4 w-4 shrink-0 text-gold" /> {mirror(w, hand)}
                 </li>
               ))}
             </ul>
@@ -347,6 +455,8 @@ function Result({
           </a>
         </div>
       </div>
+
+      <FitSteps kind={kind} />
 
       {rec.ladder.length > 1 && (
         <div className="mt-10">
@@ -404,16 +514,16 @@ function Result({
           </div>
           <div className="min-w-0 text-sm">
             <p className="font-medium text-ink">Zvažte také: {rec.alternative.name}</p>
-            <p className="text-muted-foreground">{rec.alternative.tagline}</p>
+            <p className="text-muted-foreground">{mirror(rec.alternative.tagline, hand)}</p>
           </div>
         </div>
       )}
 
       <div className="mt-10 border border-gold/40 bg-gold/5 p-5 sm:p-6">
-        <p className="text-base font-medium text-ink">Ověřte si to na fittingu</p>
+        <p className="text-base font-medium text-ink">Domluvte si fitting — doladíme zbytek</p>
         <p className="mt-1 text-sm text-muted-foreground">
-          Průvodce dá směr, ale konečnou hůl, loft a shaft určí až měření vašeho švihu. Cenu sdělíme
-          na dotaz.
+          Průvodce vybral výchozí hlavu. Shaft, grip a další parametry změříme na vašem švihu —
+          teprve pak je hůl opravdu vaše. Cenu sdělíme na dotaz.
         </p>
         <div className="mt-4 flex flex-col gap-3 sm:flex-row">
           <Button asChild size="lg">
