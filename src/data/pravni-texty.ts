@@ -22,7 +22,7 @@ import {
   VOUCHER_VALID_MONTHS,
 } from "@/lib/shop";
 
-export const TERMS_EFFECTIVE = "7. 10. 2026";
+export const TERMS_EFFECTIVE = "14. 10. 2026";
 
 /** Odstavec; `strong` = zvýrazněný (upozornění, které nesmí zapadnout). */
 export type Block = { p: string; strong?: boolean } | { ul: string[] };
@@ -50,9 +50,17 @@ export function termsSections(): LegalSection[] {
         {
           p: `${SELLER.name}, se sídlem ${sellerSeatText()}, IČO ${SELLER.companyId}${vatId}, ${SELLER.register}.`,
         },
-        {
-          p: `Golfový fitting jako samostatnou službu poskytuje ${LEGAL_NAME}, IČO ${COMPANY_ID}; tyto obchodní podmínky se vztahují na prodej zboží v e-shopu.`,
-        },
+        ...(COMPANY_ID && COMPANY_ID !== SELLER.companyId
+          ? [
+              {
+                p: `Golfový fitting jako samostatnou službu poskytuje ${LEGAL_NAME}, IČO ${COMPANY_ID}; tyto obchodní podmínky se vztahují na prodej zboží v e-shopu.`,
+              },
+            ]
+          : [
+              {
+                p: "Tyto obchodní podmínky se vztahují na prodej zboží a dárkových poukazů v e-shopu; samotný golfový fitting se sjednává individuálně.",
+              },
+            ]),
         ...(shop ? [{ p: `Adresa pro osobní odběr, vrácení zboží a reklamace: ${shop}.` }] : []),
         { p: `Kontakt: ${PHONE_DISPLAY}, ${SELLER.email}.` },
         {

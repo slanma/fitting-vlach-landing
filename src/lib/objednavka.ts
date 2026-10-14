@@ -3,10 +3,12 @@ import { products, isPurchasable, unitPrice } from "@/data/eshop";
 import { termsHtmlDocument, withdrawalHtmlDocument, TERMS_EFFECTIVE } from "@/data/pravni-texty";
 import { ORDER_PREFIX, PAYMENT_DUE_DAYS, deliveryFor, paymentsFor } from "./shop";
 import { SITE_URL } from "./site";
+import { PHONE_DISPLAY } from "./contact";
 import { newOrderNumber } from "./qr-platba";
 import { utf8Base64 } from "./qr-png";
 import { db, dbConfigured, type OrderLine, type OrderRow } from "./db";
 import {
+  note,
   addContact,
   czk,
   emailConfigured,
@@ -181,7 +183,7 @@ export const submitOrder = createServerFn({ method: "POST" })
 
     let payment = "";
     if (priced.payment.id === "prevod") {
-      payment = `<h3 style="font-size:15px;margin-top:24px">Platba převodem</h3>
+      payment = `<h3>Platba převodem</h3>
         <p>Objednávku zkontrolujeme a <strong>platební údaje včetně QR kódu vám pošleme v samostatném e-mailu</strong>.
         Splatnost je ${PAYMENT_DUE_DAYS} dní od jeho doručení. ${next}</p>`;
     } else if (priced.payment.id === "dobirka") {
@@ -190,28 +192,35 @@ export const submitOrder = createServerFn({ method: "POST" })
       payment = `<p>Platíte <strong>hotově ${czk(priced.total)}</strong> při osobním odběru. ${next}</p>`;
     }
 
-    const customerHtml = wrap(`
+    const customerHtml = wrap(
+      `
+      <h2>Děkujeme za objednávku</h2>
       <p>Dobrý den, ${esc(c.name)},</p>
-      <p>potvrzujeme přijetí vaší objednávky <strong>${order}</strong>. Tímto potvrzením je uzavřena kupní smlouva.</p>
+      <p>potvrzujeme přijetí vaší objednávky. Tímto potvrzením je uzavřena kupní smlouva.</p>
+      ${note(`Číslo objednávky <strong>${order}</strong>${priced.payment.id === "prevod" ? ` · variabilní symbol ${vs}` : ""}`)}
+      <h3>Shrnutí</h3>
       ${table}
       ${shippingBlock({ delivery: priced.delivery, address: priced.address, pickup_point: priced.point })}
       ${payment}
-      <h3 style="font-size:15px;margin-top:24px">Důležité informace</h3>
-      <p style="font-size:14px">V příloze najdete obchodní podmínky (účinné od ${TERMS_EFFECTIVE}) a formulář pro odstoupení od smlouvy.
+      <h3>Důležité informace</h3>
+      <p style="font-size:14px">Obchodní podmínky (účinné od ${TERMS_EFFECTIVE}) a formulář pro odstoupení od smlouvy najdete v příloze.
       Od smlouvy můžete odstoupit do 14 dnů od převzetí zboží bez udání důvodu. Podmínky jsou také na
       <a href="${SITE_URL}/obchodni-podminky">${SITE_URL.replace("https://", "")}/obchodni-podminky</a>.</p>
-      ${data.noMarketing ? "" : `<p style="font-size:13px;color:#6b6b6b">Občas vám můžeme poslat novinky o obdobném zboží a službách. Odhlásit se můžete kdykoli odkazem v každé zprávě nebo odpovědí na tento e-mail.</p>`}`);
+      <p style="font-size:14px">Máte dotaz? Stačí odpovědět na tento e-mail nebo zavolat na ${esc(PHONE_DISPLAY)}.</p>
+      ${data.noMarketing ? "" : `<p style="font-size:12px;color:#6b6b6b;margin-top:20px">Občas vám můžeme poslat novinky o obdobném zboží a službách. Odhlásit se můžete kdykoli odkazem v každé zprávě nebo odpovědí na tento e-mail.</p>`}`,
+      `Objednávka ${order} je přijatá — shrnutí a další kroky.`,
+    );
 
     const adminLink = savedId ? `${SITE_URL}/admin?objednavka=${savedId}` : null;
     const ownerHtml = wrap(`
       <h2>Nová objednávka ${order}</h2>
-      ${hasVoucher ? `<p style="background:#faf7ef;border:1px solid #d8c9a3;padding:10px">Obsahuje DÁRKOVÝ POUKAZ — po připsání platby klikni v administraci na „Platba přijata" a poukaz se zákazníkovi pošle sám.</p>` : ""}
+      ${hasVoucher ? note(`Obsahuje <strong>DÁRKOVÝ POUKAZ</strong> — po připsání platby klikni v administraci na „Platba přijata" a poukaz se zákazníkovi pošle sám.`) : ""}
       ${table}
       ${shippingBlock({ delivery: priced.delivery, address: priced.address, pickup_point: priced.point })}
       <p><strong>${esc(c.name)}</strong><br>${esc(c.email)}<br>${esc(c.phone)}</p>
       ${c.note ? `<p><strong>Poznámka:</strong> ${esc(c.note)}</p>` : ""}
       <p>Platba: ${esc(priced.payment.label)} · VS ${vs}${priced.payment.id === "prevod" ? " · <strong>Pošli zákazníkovi výzvu k platbě z administrace.</strong>" : ""}</p>
-      ${adminLink ? `<p><a href="${adminLink}">Otevřít v administraci</a></p>` : `<p style="color:#a33">Objednávka NENÍ v administraci (databáze nenastavená nebo chyba) — vyřiď ji z tohoto e-mailu.</p>`}
+      ${adminLink ? `<p><a href="${adminLink}">Otevřít v administraci</a></p>` : note("Objednávka NENÍ v administraci (databáze nenastavená nebo chyba) — vyřiď ji z tohoto e-mailu.", "alert")}
       <p style="color:${data.noMarketing ? "#a33" : "#6b6b6b"}">${
         data.noMarketing
           ? "Zákazník ODMÍTL obchodní sdělení — nepřidávat do newsletteru."

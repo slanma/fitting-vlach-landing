@@ -4,7 +4,7 @@ import { SITE_URL, SITE_NAME, LEGAL_NAME, COMPANY_ID } from "@/lib/site";
 import { PHONE_DISPLAY } from "@/lib/contact";
 import { SELLER, sellerSeatText } from "@/lib/prodavajici";
 
-const UPDATED = "7. 10. 2026";
+const UPDATED = "14. 10. 2026";
 
 export const Route = createFileRoute("/ochrana-osobnich-udaju")({
   head: () => ({

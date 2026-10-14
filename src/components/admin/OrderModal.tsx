@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Download, Mail, Trash2, X, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { SELLER } from "@/lib/prodavajici";
 import { adminField } from "@/components/admin/AdminShell";
 import {
   deleteOrder,
@@ -92,7 +93,7 @@ export function OrderModal({
       amount: Number(order.total),
       variableSymbol: order.vs,
       message: `Objednavka ${order.number}`,
-      recipient: "Vapesport Vlach s.r.o.",
+      recipient: SELLER.name,
       dueDate: due,
     });
     if (!spayd) return null;

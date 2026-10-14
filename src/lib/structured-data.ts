@@ -211,9 +211,8 @@ export function breadcrumbSchema(trail: Array<{ name: string; url: string }>) {
  * nabídku — proto tam `offers` není.
  */
 const sellerSchema = {
-  "@type": "Organization",
+  "@type": "Person",
   name: SELLER.name,
-  vatID: SELLER.vatId,
   identifier: { "@type": "PropertyValue", name: "IČO", value: SELLER.companyId },
 };
 

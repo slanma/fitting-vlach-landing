@@ -20,10 +20,17 @@ export function SiteFooter() {
             </address>
           )}
           <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
-            E-shop: {SELLER.name}, IČO {SELLER.companyId}
-            <br />
-            Fitting: {LEGAL_NAME}
-            {COMPANY_ID ? `, IČO ${COMPANY_ID}` : ""}
+            {COMPANY_ID && COMPANY_ID !== SELLER.companyId ? (
+              <>
+                E-shop: {SELLER.name}, IČO {SELLER.companyId}
+                <br />
+                Fitting: {LEGAL_NAME}, IČO {COMPANY_ID}
+              </>
+            ) : (
+              <>
+                {SELLER.name}, IČO {SELLER.companyId}
+              </>
+            )}
           </p>
         </div>
 

@@ -2,16 +2,16 @@ import { SELLER } from "./prodavajici";
 
 /**
  * Nastavení e-shopu. Vše, co se mění bez zásahu do logiky, je tady.
- * Doprava a platby odpovídají vapesport.cz (stejná firma, stejní dopravci).
+ * Doprava a platby fungují stejně jako na vapesport.cz (stejní dopravci).
  */
 
 /**
- * Výchozí bankovní účet Vapesport Vlach s.r.o. — platí, dokud se v administraci
- * (Nastavení → Bankovní účty) neuloží jiný seznam. Pak má přednost databáze.
+ * Výchozí bankovní účty — záměrně prázdné. Účet Ing. Petra Vlacha se zadává
+ * v administraci (Nastavení → Bankovní účty) a ukládá do databáze.
+ * Dřív tu byl účet Vapesport Vlach s.r.o.; ten sem už nepatří, jinak by
+ * platby za prodej Petra chodily na účet společnosti.
  */
-export const DEFAULT_BANK_ACCOUNTS: { id: string; name: string; account: string }[] = [
-  { id: "fio", name: "Fio", account: "CZ3220100000002901174453" },
-];
+export const DEFAULT_BANK_ACCOUNTS: { id: string; name: string; account: string }[] = [];
 
 export const VAT_PAYER = SELLER.vatPayer;
 export const VAT_ID_FOR_INVOICES: string | null = SELLER.vatId;

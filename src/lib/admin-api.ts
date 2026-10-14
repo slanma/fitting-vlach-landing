@@ -10,6 +10,7 @@ import {
   type OrderStatus,
   type VoucherRow,
 } from "./db";
+import { SELLER } from "./prodavajici";
 import { paidEmail, paymentRequestEmail, sendEmail, statusEmail } from "./emails";
 import { loadSettings, saveSetting } from "./nastaveni";
 import { accountToIban, buildSpayd } from "./qr-platba";
@@ -212,7 +213,7 @@ export const sendPaymentRequest = createServerFn({ method: "POST" })
       amount: Number(o.total),
       variableSymbol: o.vs,
       message: `Objednavka ${o.number}`,
-      recipient: "Vapesport Vlach s.r.o.",
+      recipient: SELLER.name,
       dueDate: due,
     });
     if (!iban || !spayd)
