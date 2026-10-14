@@ -3,6 +3,7 @@ import { LegalPage, Section } from "@/components/site/LegalPage";
 import { SITE_URL, SITE_NAME, LEGAL_NAME, COMPANY_ID } from "@/lib/site";
 import { PHONE_DISPLAY } from "@/lib/contact";
 import { SELLER, sellerSeatText } from "@/lib/prodavajici";
+import { openCookieSettings } from "@/lib/consent";
 
 const UPDATED = "14. 10. 2026";
 
@@ -89,7 +90,7 @@ function Page() {
           Zpracovávat je za nás mohou tito zpracovatelé: provozovatel databáze objednávek Supabase
           (data uložená v EU), poskytovatel e-mailové služby Resend (Resend, Inc., USA; e-maily odcházejí přes servery v EU,
           případné předání do USA probíhá na základě standardních smluvních doložek EU),
-          poskytovatel hostingu webu a účetní. Při doručení předáváme jméno, telefon, e-mail a
+          poskytovatel hostingu webu, účetní a – pouze s vaším souhlasem s měřením návštěvnosti – Google Ireland Limited (Google Analytics). Při doručení předáváme jméno, telefon, e-mail a
           adresu nebo výdejní místo zvolenému dopravci (PPL CZ s.r.o. nebo Packeta s.r.o. —
           Zásilkovna). Orgánům veřejné moci údaje předáváme jen v rozsahu, který ukládá zákon.
         </p>
@@ -100,13 +101,32 @@ function Page() {
         </p>
       </Section>
 
-      <Section heading="Cookies">
+      <Section heading="Cookies a měření návštěvnosti">
         <p>
-          Web nepoužívá analytické, marketingové ani profilovací cookies a nesleduje chování
-          návštěvníků. Obsah košíku a rozpracovaný golfový profil se ukládají do místního úložiště
-          vašeho prohlížeče (nikam se neodesílají), aby vám při obnovení stránky nezmizel; jde o
-          technicky nezbytnou funkci, kterou jste si vyžádali, a nevyžaduje souhlas. Smazat ji
-          můžete kdykoli vymazáním dat webu v prohlížeči.
+          Obsah košíku, rozpracovaný golfový profil a vaše volba ohledně cookies se ukládají do
+          místního úložiště vašeho prohlížeče (nikam se neodesílají). Jde o technicky nezbytnou
+          funkci, která nevyžaduje souhlas. Smazat ji můžete kdykoli vymazáním dat webu v
+          prohlížeči.
+        </p>
+        <p>
+          Jen s vaším souhlasem používáme Google Analytics 4 k měření návštěvnosti – například kolik
+          lidí web navštíví, odkud přišli, které stránky je zajímají a zda kliknuli na telefon nebo
+          e-mail. Právním základem je váš souhlas podle čl. 6 odst. 1 písm. a) GDPR. Bez souhlasu se
+          měřicí skript vůbec nenačte. Google Analytics ukládá cookies _ga a _ga_* a údaje uchovává
+          14 měsíců. Zpracovatelem je Google Ireland Limited; případné předání do USA společnosti
+          Google LLC probíhá na základě rámce EU–USA pro ochranu osobních údajů (Data Privacy
+          Framework). Údaje nepoužíváme k reklamě ani k profilování.
+        </p>
+        <p>
+          Souhlas můžete kdykoli změnit nebo odvolat:{" "}
+          <button
+            type="button"
+            onClick={openCookieSettings}
+            className="underline underline-offset-2 hover:text-foreground"
+          >
+            Nastavení cookies
+          </button>
+          . Odvolání nemá vliv na zákonnost měření před ním.
         </p>
         <p>
           Golfový profil a průvodce výběrem hole jsou anonymní — neptají se na jméno ani kontakt a

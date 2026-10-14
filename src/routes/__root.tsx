@@ -22,6 +22,8 @@ import {
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { CartProvider } from "../lib/cart";
 import { CartSheet } from "../components/site/eshop/CartSheet";
+import { CookieConsent } from "../components/site/CookieConsent";
+import { GA_INIT_SCRIPT } from "../lib/consent";
 
 function NotFoundComponent() {
   return (
@@ -133,6 +135,8 @@ function RootShell({ children }: { children: ReactNode }) {
     <html lang={SITE_LANG}>
       <head>
         <HeadContent />
+        {/* Google Analytics – Consent Mode v2, načte se až po souhlasu */}
+        <script dangerouslySetInnerHTML={{ __html: GA_INIT_SCRIPT }} />
       </head>
       <body>
         {children}
@@ -151,6 +155,7 @@ function RootComponent() {
         {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
         <Outlet />
         <CartSheet />
+        <CookieConsent />
       </CartProvider>
     </QueryClientProvider>
   );
