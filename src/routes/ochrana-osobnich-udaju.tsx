@@ -45,7 +45,7 @@ function Page() {
         </p>
         <p>
           Objednávky z e-shopu se ukládají do databáze objednávek, ke které má přístup jen
-          prodávající přes chráněnou administraci, a potvrzení odchází e-mailem přes službu Brevo.
+          prodávající přes chráněnou administraci, a potvrzení odchází e-mailem přes službu Resend.
           Obsah košíku před odesláním objednávky zůstává pouze ve vašem prohlížeči. Pro přihlášení
           do administrace se používá technická cookie, kterou dostává jen obsluha e-shopu, ne
           zákazníci.
@@ -70,7 +70,7 @@ function Page() {
         </p>
         <p>
           Pokud jste u nás dosud nenakoupili, obchodní sdělení vám pošleme jedině s vaším předchozím
-          souhlasem. Pro rozesílání vede služba Brevo seznam odběratelů (jméno a e-mail); adresu v
+          souhlasem. Pro rozesílání vede služba Resend seznam odběratelů (jméno a e-mail); adresu v
           něm uchováváme, dokud odběr neodmítnete.
         </p>
       </Section>
@@ -87,7 +87,8 @@ function Page() {
         <p>
           Osobní údaje neprodáváme ani nepředáváme třetím stranám pro marketingové účely.
           Zpracovávat je za nás mohou tito zpracovatelé: provozovatel databáze objednávek Supabase
-          (data uložená v EU), poskytovatel e-mailové služby Brevo (Sendinblue SAS, Francie),
+          (data uložená v EU), poskytovatel e-mailové služby Resend (Resend, Inc., USA; e-maily odcházejí přes servery v EU,
+          případné předání do USA probíhá na základě standardních smluvních doložek EU),
           poskytovatel hostingu webu a účetní. Při doručení předáváme jméno, telefon, e-mail a
           adresu nebo výdejní místo zvolenému dopravci (PPL CZ s.r.o. nebo Packeta s.r.o. —
           Zásilkovna). Orgánům veřejné moci údaje předáváme jen v rozsahu, který ukládá zákon.

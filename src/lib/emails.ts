@@ -1,14 +1,14 @@
 /**
- * E-maily přes Brevo (bezplatný tarif: 300 e-mailů denně).
+ * E-maily přes Resend (doména vlachfitting.cz ověřená v účtu Resend, region EU).
  *
- * Proměnné prostředí:
- *   BREVO_API_KEY     Brevo → SMTP & API → API Keys (API klíč, NE SMTP klíč).
- *   BREVO_FROM_EMAIL  odesílatel; výchozí info@vapesport.cz. Doména musí být
- *                     v Brevo ověřená (Senders, Domains & Dedicated IPs → Domains),
- *                     jinak Brevo odesílatele přepíše na svou doménu.
- *   BREVO_FROM_NAME   jméno odesílatele, výchozí „Vlach Fitting".
- *   ORDER_INBOX       kam chodí kopie objednávek; výchozí info@vapesport.cz.
- *   BREVO_LIST_ID     seznam pro obchodní sdělení; když chybí, kontakty se nezapisují.
+ * Proměnné prostředí (Vercel → Environment Variables):
+ *   RESEND_API_KEY      Resend → API Keys, oprávnění „Sending access" jen pro vlachfitting.cz.
+ *   MAIL_FROM           odesílatel; výchozí „Vlach Fitting <info@vlachfitting.cz>".
+ *                       Musí být na doméně ověřené v Resendu.
+ *   ORDER_INBOX         kam chodí kopie objednávek a odpovědi zákazníků;
+ *                       výchozí info@vapesport.cz.
+ *   RESEND_AUDIENCE_ID  seznam pro obchodní sdělení (Resend → Audiences);
+ *                       když chybí, kontakty se nezapisují.
  */
 
 import { SITE_URL } from "./site";
@@ -19,24 +19,32 @@ import type { OrderLine, OrderRow } from "./db";
 
 const env = (k: string) => process.env[k];
 
-export const emailConfigured = () => !!env("BREVO_API_KEY");
+const DEFAULT_FROM = "Vlach Fitting <info@vlachfitting.cz>";
+
+export const emailConfigured = () => !!env("RESEND_API_KEY");
 export const orderInbox = () => env("ORDER_INBOX") || SELLER.email;
 
+/** content = base64 */
 export type Attachment = { name: string; content: string };
 
-async function brevo(path: string, body: unknown): Promise<void> {
-  const res = await fetch(`https://api.brevo.com/v3${path}`, {
+/** „Jméno <adresa>" bez znaků, které by rozbily hlavičku. */
+const addr = (email: string, name?: string) => {
+  const clean = (name ?? "").replace(/["<>\r\n]/g, "").trim();
+  return clean ? `${clean} <${email}>` : email;
+};
+
+async function resend(path: string, body: unknown): Promise<void> {
+  const res = await fetch(`https://api.resend.com${path}`, {
     method: "POST",
     headers: {
-      "api-key": env("BREVO_API_KEY") ?? "",
+      Authorization: `Bearer ${env("RESEND_API_KEY") ?? ""}`,
       "Content-Type": "application/json",
-      accept: "application/json",
     },
     body: JSON.stringify(body),
   });
   if (!res.ok) {
     const detail = await res.text().catch(() => "");
-    throw new Error(`Brevo ${res.status}: ${detail.slice(0, 200)}`);
+    throw new Error(`Resend ${res.status}: ${detail.slice(0, 200)}`);
   }
 }
 
@@ -48,32 +56,29 @@ export async function sendEmail(m: {
   replyTo?: { email: string; name?: string };
   attachments?: Attachment[];
 }): Promise<void> {
-  await brevo("/smtp/email", {
-    sender: {
-      email: env("BREVO_FROM_EMAIL") || SELLER.email,
-      name: env("BREVO_FROM_NAME") || "Vlach Fitting",
-    },
-    to: [{ email: m.to, ...(m.toName ? { name: m.toName } : {}) }],
+  const reply = m.replyTo ?? { email: orderInbox(), name: "Vlach Fitting" };
+  await resend("/emails", {
+    from: env("MAIL_FROM") || DEFAULT_FROM,
+    to: [addr(m.to, m.toName)],
     subject: m.subject,
-    htmlContent: m.html,
-    replyTo: m.replyTo ?? { email: orderInbox(), name: "Vlach Fitting" },
-    ...(m.attachments?.length ? { attachment: m.attachments } : {}),
+    html: m.html,
+    reply_to: addr(reply.email, reply.name),
+    ...(m.attachments?.length
+      ? { attachments: m.attachments.map((a) => ({ filename: a.name, content: a.content })) }
+      : {}),
   });
 }
 
 /** Zápis do seznamu pro obchodní sdělení — jen když zákazník neodmítl. */
 export async function addContact(c: { name: string; email: string }): Promise<void> {
-  const listId = Number(env("BREVO_LIST_ID"));
-  if (!Number.isFinite(listId) || listId <= 0) return;
+  const audience = env("RESEND_AUDIENCE_ID");
+  if (!audience) return;
   const parts = c.name.split(/\s+/);
-  await brevo("/contacts", {
+  await resend(`/audiences/${encodeURIComponent(audience)}/contacts`, {
     email: c.email,
-    attributes: {
-      FIRSTNAME: parts.slice(0, -1).join(" ") || parts[0] || "",
-      LASTNAME: parts.length > 1 ? parts[parts.length - 1]! : "",
-    },
-    listIds: [listId],
-    updateEnabled: true,
+    first_name: parts.slice(0, -1).join(" ") || parts[0] || "",
+    last_name: parts.length > 1 ? parts[parts.length - 1]! : "",
+    unsubscribed: false,
   });
 }
 

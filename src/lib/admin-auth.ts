@@ -36,7 +36,7 @@ export const adminSetup = createServerFn({ method: "GET" }).handler(
       });
     if (!emailConfigured())
       missing.push({
-        key: "BREVO_API_KEY",
+        key: "RESEND_API_KEY",
         what: "e-maily — bez nich nechodí potvrzení zákazníkům ani objednávky na info@vapesport.cz",
       });
     return { canLogin: !!adminPassword(), missing };
