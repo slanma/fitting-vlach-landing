@@ -25,36 +25,39 @@ Změnou hesla na Vercelu (a Redeploy) se odhlásí všichni přihlášení.
    - Project URL → `SUPABASE_URL`
    - `service_role` key → `SUPABASE_SERVICE_ROLE_KEY` (tajný, nikam neposílat)
 
-## 2. E-maily (Brevo)
+## 2. E-maily (Resend)
 
-1. Účet zdarma na https://www.brevo.com (300 e-mailů denně).
-2. **Senders, Domains & Dedicated IPs → Domains → Add a domain** → `vapesport.cz`.
-   Brevo ukáže 2–3 DNS záznamy (DKIM, Brevo code, DMARC) — přidej je u správce
-   DNS domény vapesport.cz. Záznamy pro Resend tam nech, oba se snesou.
-3. **Senders → Add a sender** → `info@vapesport.cz`, jméno „Vlach Fitting".
-4. **SMTP & API → API Keys → Generate** → `BREVO_API_KEY`
-   (pozor: API klíč, ne SMTP heslo).
-5. Volitelně **Contacts → Lists** → nový seznam „Vlach Fitting zákazníci",
-   jeho číslo → `BREVO_LIST_ID`.
+Hotovo v říjnu 2026 — stejný účet Resend jako vapesport.cz, ale vlastní doména a klíč.
+
+1. **Resend → Domains** → `vlachfitting.cz`, region Ireland (eu-west-1).
+   DNS záznamy (DKIM `resend._domainkey`, CNAME `send` a `rsend`, DMARC `_dmarc`)
+   jsou ve Vercel DNS domény vlachfitting.cz.
+2. **Resend → API Keys** → klíč `vlachfitting`, oprávnění **Sending access**,
+   doména jen `vlachfitting.cz` → `RESEND_API_KEY`.
+3. Odesílatel je `info@vlachfitting.cz`, odpovědi zákazníků chodí na `info@vapesport.cz`
+   (na vlachfitting.cz žádná schránka není).
+4. Volitelně **Resend → Audiences** → nový seznam „Vlach Fitting zákazníci",
+   jeho ID → `RESEND_AUDIENCE_ID`.
 
 ## 3. Proměnné na hostingu
 
-Na Vercelu (**Settings → Environment Variables**) přidej:
+Na Vercelu (**projekt fitting-vlach-landing → Environment Variables**) přidej:
 
 | Název | Hodnota |
 |---|---|
+| `ADMIN_PASSWORD` | z bodu 0 |
 | `SUPABASE_URL` | z bodu 1 |
 | `SUPABASE_SERVICE_ROLE_KEY` | z bodu 1 |
-| `BREVO_API_KEY` | z bodu 2 |
-| `BREVO_FROM_EMAIL` | `info@vapesport.cz` |
-| `BREVO_LIST_ID` | volitelně, z bodu 2 |
+| `RESEND_API_KEY` | z bodu 2 |
+| `RESEND_AUDIENCE_ID` | volitelně, z bodu 2 |
 
-Volitelně: `ADMIN_EMAILS` (kdo se smí přihlásit, čárkou; výchozí `info@vapesport.cz`)
-a `ORDER_INBOX` (kam chodí objednávky; výchozí `info@vapesport.cz`).
+Volitelně: `MAIL_FROM` (výchozí `Vlach Fitting <info@vlachfitting.cz>`),
+`ADMIN_EMAILS` (kdo se smí přihlásit, čárkou; výchozí `info@vapesport.cz`)
+a `ORDER_INBOX` (kam chodí objednávky a odpovědi; výchozí `info@vapesport.cz`).
 Po přidání proměnných vždy **Redeploy**.
 
-Pozor: dokud není zapojené Brevo, e-shop objednávky nepřijme (zákazník musí dostat
-potvrzení s obchodními podmínkami). Proto Brevo zapoj dřív, než e-shop zveřejníš.
+Pozor: dokud není nastavený `RESEND_API_KEY`, e-shop objednávky nepřijme (zákazník musí
+dostat potvrzení s obchodními podmínkami).
 
 ## 4. Údaje v kódu (`src/lib/shop.ts`)
 
@@ -63,13 +66,13 @@ potvrzení s obchodními podmínkami). Proto Brevo zapoj dřív, než e-shop zve
 
 Cena rukavic HIRZL, hodnoty poukazů a fotky produktů jsou v `src/data/eshop.ts`
 (fotky se nahrávají do `public/images/eshop/`, postup je v README v té složce).
-Výchozí účet je Fio CZ32 2010 0000 0029 0117 4453 — v administraci ho jde kdykoli změnit.
+Výchozí účet v kódu není — účet Ing. Petra Vlacha zadej v administraci (Nastavení → Bankovní účty).
 QR a platební údaje se zákazníkovi posílají jen ručně tlačítkem „Odeslat výzvu k platbě“.
 
 ## Po prvním přihlášení
 
-Účet Fio je nastavený rovnou v kódu, takže QR platby fungují hned. V **Nastavení → Bankovní účty**
-ho můžeš změnit nebo přidat další; první účet v seznamu je předvybraný ve výzvě k platbě.
+Nejdřív v **Nastavení → Bankovní účty** přidej účet Ing. Petra Vlacha (potřebuje připojenou databázi).
+Dokud tam žádný účet není, výzvu k platbě nejde odeslat. První účet v seznamu je předvybraný.
 
 ## Jak se vyřizuje objednávka
 
@@ -83,7 +86,7 @@ Kliknutím na objednávku v seznamu se otevře detail.
    e-mail a u poukazu se poukaz vystaví a pošle sám.
 3. **PPL / Zásilkovna:** vlož číslo zásilky → **Odesláno** → zákazník dostane e-mail se sledováním.
 4. **Osobní odběr:** tlačítko se jmenuje **Připraveno k vyzvednutí** → zákazník dostane e-mail s adresou.
-5. Po převzetí **Doručena**. Fakturu vystavuj jako dosud v účetnictví Vapesportu.
+5. Po převzetí **Doručena**. Fakturu vystavuj v účetnictví Ing. Petra Vlacha (ne Vapesportu).
 
 E-mail zákazníkovi odchází při platbě, odeslání a zrušení — jde vypnout zaškrtávátkem v detailu.
 
