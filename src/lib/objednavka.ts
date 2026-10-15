@@ -1,5 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
-import { products, isPurchasable, unitPrice } from "@/data/eshop";
+import { products, isPurchasable, unitPrice, customAmount, customAmountText } from "@/data/eshop";
 import { termsHtmlDocument, withdrawalHtmlDocument, TERMS_EFFECTIVE } from "@/data/pravni-texty";
 import { ORDER_PREFIX, PAYMENT_DUE_DAYS, deliveryFor, paymentsFor } from "./shop";
 import { SITE_URL } from "./site";
@@ -67,8 +67,15 @@ function cleanConfig(slug: string, raw: unknown): Record<string, string> | null 
   const out: Record<string, string> = {};
   for (const o of p.options) {
     const v = (raw as Record<string, unknown>)[o.label];
-    if (typeof v !== "string" || !o.values.includes(v)) return null;
-    out[o.label] = v;
+    if (typeof v !== "string") return null;
+    if (o.values.includes(v)) {
+      out[o.label] = v;
+      continue;
+    }
+    // Vlastní částka poukazu — povolená jen v rozmezí z eshop.ts, uloží se ve tvaru „1 500 Kč".
+    const n = p.priceBy?.label === o.label ? customAmount(p, v) : null;
+    if (n === null) return null;
+    out[o.label] = customAmountText(n);
   }
   return out;
 }

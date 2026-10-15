@@ -4,7 +4,14 @@ import { ArrowLeft, Check, Mail, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Navbar } from "@/components/site/Navbar";
 import { SiteFooter } from "@/components/site/SiteFooter";
-import { findProduct, priceLabel, unitPrice, formatPrice, isMadeToOrder } from "@/data/eshop";
+import {
+  findProduct,
+  priceLabel,
+  unitPrice,
+  formatPrice,
+  isMadeToOrder,
+  customAmountText,
+} from "@/data/eshop";
 import { useCart } from "@/lib/cart";
 import { OptionPicker } from "@/components/site/eshop/OptionPicker";
 import { GloveSizeHelper } from "@/components/site/eshop/GloveSizeHelper";
@@ -63,6 +70,16 @@ function Detail() {
   const [config, setConfig] = useState<Record<string, string>>(() =>
     Object.fromEntries(product.options.map((o) => [o.label, o.values[0] ?? ""])),
   );
+  // Vlastní částka poukazu (pole se ukáže po výběru „Vlastní částka")
+  const custom = product.priceBy?.custom;
+  const [customOn, setCustomOn] = useState(false);
+  const [customInput, setCustomInput] = useState("");
+  const setCustom = (text: string) => {
+    setCustomInput(text);
+    const n = Number(text.replace(/\D/g, ""));
+    setConfig((c) => ({ ...c, [product.priceBy!.label]: n ? customAmountText(n) : custom!.option }));
+  };
+  const price = unitPrice(product, config);
 
   return (
     <div className="min-h-screen bg-background">
@@ -125,9 +142,46 @@ function Detail() {
             <div key={o.label} className="space-y-4">
               <OptionPicker
                 option={o}
-                value={config[o.label] ?? ""}
-                onChange={(v) => setConfig((c) => ({ ...c, [o.label]: v }))}
+                value={custom && customOn && o.label === product.priceBy?.label ? custom.option : (config[o.label] ?? "")}
+                onChange={(v) => {
+                  if (custom && o.label === product.priceBy?.label) {
+                    const on = v === custom.option;
+                    setCustomOn(on);
+                    if (on) {
+                      setCustom(customInput);
+                      return;
+                    }
+                  }
+                  setConfig((c) => ({ ...c, [o.label]: v }));
+                }}
               />
+              {custom && customOn && o.label === product.priceBy?.label && (
+                <div>
+                  <label htmlFor="vlastni-castka" className="label-tech">
+                    Zadejte částku
+                  </label>
+                  <div className="relative mt-3 max-w-xs">
+                    <input
+                      id="vlastni-castka"
+                      type="number"
+                      inputMode="numeric"
+                      min={custom.min}
+                      max={custom.max}
+                      step={custom.step}
+                      value={customInput}
+                      onChange={(e) => setCustom(e.target.value)}
+                      placeholder={String(custom.min * 3)}
+                      className="w-full border border-border bg-card px-4 py-3 pr-12 text-sm text-ink focus:border-gold focus:outline-none"
+                    />
+                    <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">
+                      Kč
+                    </span>
+                  </div>
+                  <p className={`mt-2 text-xs ${customInput && price === null ? "text-destructive" : "text-muted-foreground"}`}>
+                    Od {formatPrice(custom.min)} do {formatPrice(custom.max)}, po {custom.step} Kč.
+                  </p>
+                </div>
+              )}
               {o.label === "Velikost" && product.sizeChart === "hirzl" && (
                 <GloveSizeHelper
                   values={o.values}
@@ -187,9 +241,7 @@ function Detail() {
           <div className="mt-8 flex flex-col items-start gap-4 border-t border-border pt-6 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <span className="font-display text-xl text-ink">
-                {product.priceBy
-                  ? formatPrice(unitPrice(product, config) ?? 0)
-                  : priceLabel(product)}
+                {product.priceBy ? (price ? formatPrice(price) : "Zadejte částku") : priceLabel(product)}
               </span>
               <span className="block text-xs text-muted-foreground">
                 {VAT_PAYER ? "včetně DPH" : "nejsme plátci DPH"} ·{" "}
@@ -198,7 +250,11 @@ function Detail() {
                   : "skladem · osobní odběr zdarma, Zásilkovna 150 Kč, PPL 200 Kč"}
               </span>
             </div>
-            <Button size="lg" onClick={() => cart.add(product, config)}>
+            <Button
+              size="lg"
+              disabled={!!product.priceBy && price === null}
+              onClick={() => cart.add(product, config)}
+            >
               Do košíku
             </Button>
           </div>

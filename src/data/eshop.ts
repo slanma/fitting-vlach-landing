@@ -36,7 +36,12 @@ export type Product = {
    * Cena podle zvolené volby (např. hodnota poukazu). Klíč = hodnota volby
    * `label`, hodnota = cena v Kč vč. DPH. Když je vyplněné, `price` se ignoruje.
    */
-  priceBy?: { label: string; prices: Record<string, number> };
+  priceBy?: {
+    label: string;
+    prices: Record<string, number>;
+    /** Volitelná vlastní částka: volba `option` odemkne pole pro zadání částky. */
+    custom?: { option: string; min: number; max: number; step: number };
+  };
   /** Zboží, které jde poslat e-mailem (poukaz) — umožní dopravu „e-mailem". */
   digital?: boolean;
   /**
@@ -176,11 +181,13 @@ export const products: Product[] = [
         label: "Na co",
         values: ["Cokoli z nabídky", "Golfové poradenství", "Golfové hole", "Golfové příslušenství"],
       },
-      { label: "Hodnota", values: ["1 000 Kč", "2 000 Kč", "3 000 Kč", "5 000 Kč"] },
+      { label: "Hodnota", values: ["1 000 Kč", "2 000 Kč", "3 000 Kč", "5 000 Kč", "Vlastní částka"] },
     ],
     priceBy: {
       label: "Hodnota",
       prices: { "1 000 Kč": 1000, "2 000 Kč": 2000, "3 000 Kč": 3000, "5 000 Kč": 5000 },
+      // VLASTNÍ ČÁSTKA — rozmezí a krok si uprav podle potřeby.
+      custom: { option: "Vlastní částka", min: 500, max: 20000, step: 100 },
     },
     madeToOrder: false,
     digital: true,
@@ -397,10 +404,25 @@ export const isPurchasable = (p: Product) => p.active && !isMadeToOrder(p) && ha
 const isVisible = (p: Product) => p.active && (p.madeToOrder || hasPrice(p));
 
 /** Jednotková cena pro konkrétní konfiguraci; `null` = taková varianta neexistuje. */
+/** Vlastní částka ve tvaru „1 500 Kč" → 1500, jen v povoleném rozmezí a kroku. */
+export function customAmount(p: Product, raw: string | undefined): number | null {
+  const c = p.priceBy?.custom;
+  if (!c || !raw || raw === c.option) return null;
+  const digits = raw.replace(/\D/g, "");
+  if (!digits || digits.length > 7) return null;
+  const n = Number(digits);
+  return n >= c.min && n <= c.max && n % c.step === 0 ? n : null;
+}
+
+/** Text vlastní částky, jak se uloží do košíku a objednávky. */
+export const customAmountText = (n: number) => `${new Intl.NumberFormat("cs-CZ").format(n)} Kč`;
+
 export function unitPrice(p: Product, config: Record<string, string>): number | null {
   if (!p.priceBy) return p.price > 0 ? p.price : null;
-  const v = p.priceBy.prices[config[p.priceBy.label] ?? ""];
-  return v && v > 0 ? v : null;
+  const raw = config[p.priceBy.label] ?? "";
+  const v = p.priceBy.prices[raw];
+  if (v && v > 0) return v;
+  return customAmount(p, raw);
 }
 
 export const activeProducts = () => products.filter(isVisible);
