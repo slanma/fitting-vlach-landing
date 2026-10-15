@@ -129,7 +129,7 @@ export function termsSections(): LegalSection[] {
       heading: "5a. Dárkové poukazy",
       blocks: [
         {
-          p: `Dárkový poukaz je hodnotový poukaz vystavený prodávajícím. Lze jej uplatnit u prodávajícího na golfový fitting, stavbu holí na míru i na zboží, a to najednou nebo postupně až do výše jeho hodnoty. Poukaz platí ${VOUCHER_VALID_MONTHS} měsíců ode dne vystavení; datum platnosti je na poukazu uvedeno.`,
+          p: `Dárkový poukaz je hodnotový poukaz vystavený prodávajícím. Lze jej uplatnit u prodávajícího na golfové poradenství, golfové hole i golfové příslušenství, a to najednou nebo postupně až do výše jeho hodnoty. Poukaz platí ${VOUCHER_VALID_MONTHS} měsíců ode dne vystavení; datum platnosti je na poukazu uvedeno.`,
         },
         {
           p: "Poukaz zasíláme po připsání platby e-mailem jako odkaz, ze kterého jej lze vytisknout nebo uložit jako PDF. Poukaz není možné vyměnit za hotovost ani za něj vracet peníze při částečném uplatnění; vyšší cenu lze doplatit. Poukaz je přenosný — uplatnit ho může kdokoli, kdo jej předloží.",

@@ -108,17 +108,22 @@ async function issueVouchers(o: OrderRow): Promise<VoucherRow[]> {
   for (const line of o.items) {
     if (!products.find((x) => x.slug === line.slug)?.digital) continue;
     for (let i = 0; i < line.qty; i++) {
-      out.push(
-        await db.insert<VoucherRow>("vf_vouchers", {
-          code: voucherCode(),
-          order_id: o.id,
-          order_number: o.number,
-          value: line.unit,
-          remaining: line.unit,
-          valid_until: valid.toISOString().slice(0, 10),
-          status: "aktivni",
-        }),
-      );
+      const row = {
+        code: voucherCode(),
+        order_id: o.id,
+        order_number: o.number,
+        value: line.unit,
+        remaining: line.unit,
+        valid_until: valid.toISOString().slice(0, 10),
+        status: "aktivni" as const,
+      };
+      const purpose = line.config?.["Na co"] || null;
+      try {
+        out.push(await db.insert<VoucherRow>("vf_vouchers", { ...row, purpose }));
+      } catch {
+        // Databáze ještě nemá sloupec `purpose` (viz supabase/vlachfitting.sql) — vystav bez něj.
+        out.push(await db.insert<VoucherRow>("vf_vouchers", row));
+      }
     }
   }
   return out;
@@ -344,9 +349,9 @@ export const publicVoucher = createServerFn({ method: "GET" })
       .toUpperCase()
       .slice(0, 20);
     if (!/^VF-[A-Z0-9]{4}-[A-Z0-9]{4}$/.test(code)) return null;
-    const [v] = await db.select<VoucherRow>(
-      "vf_vouchers",
-      `code=eq.${q(code)}&select=code,value,remaining,valid_until,recipient,status&limit=1`,
-    );
-    return v ?? null;
+    const base = `code=eq.${q(code)}&limit=1&select=code,value,remaining,valid_until,recipient,status`;
+    const rows = await db
+      .select<VoucherRow>("vf_vouchers", `${base},purpose`)
+      .catch(() => db.select<VoucherRow>("vf_vouchers", base));
+    return rows[0] ?? null;
   });

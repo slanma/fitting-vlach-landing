@@ -218,7 +218,7 @@ export const voucherUrl = (code: string) => `${SITE_URL}/poukaz/${encodeURICompo
 // E-maily z administrace
 // ---------------------------------------------------------------------------
 
-type VoucherInfo = { code: string; value: number; valid_until: string };
+type VoucherInfo = { code: string; value: number; valid_until: string; purpose?: string | null };
 
 const voucherList = (vouchers: VoucherInfo[]) =>
   vouchers.length
@@ -227,7 +227,7 @@ const voucherList = (vouchers: VoucherInfo[]) =>
        <ul>${vouchers
          .map(
            (v) =>
-             `<li><a href="${voucherUrl(v.code)}">${esc(v.code)}</a> — ${czk(v.value)}, platí do ${new Date(v.valid_until).toLocaleDateString("cs-CZ")}</li>`,
+             `<li><a href="${voucherUrl(v.code)}">${esc(v.code)}</a> — ${czk(v.value)}${v.purpose && v.purpose !== "Cokoli z nabídky" ? ` na ${esc(v.purpose.toLowerCase())}` : ""}, platí do ${new Date(v.valid_until).toLocaleDateString("cs-CZ")}</li>`,
          )
          .join("")}</ul>`
     : "";

@@ -43,6 +43,39 @@ export function OptionPicker({
   value: string;
   onChange: (v: string) => void;
 }) {
+  // Roletka (účel dárkového poukazu)
+  if (option.label === "Na co") {
+    const id = `opt-${option.label.replace(/\s+/g, "-")}`;
+    return (
+      <div>
+        <label htmlFor={id} className="label-tech">
+          Poukaz na
+        </label>
+        <div className="relative mt-3">
+          <select
+            id={id}
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+            className="w-full appearance-none border border-border bg-card px-4 py-3 pr-10 text-sm text-ink transition-colors hover:border-gold/60 focus:border-gold focus:outline-none"
+          >
+            {option.values.map((v) => (
+              <option key={v} value={v}>
+                {v}
+              </option>
+            ))}
+          </select>
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 20 20"
+            className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gold"
+          >
+            <path d="M5 7.5l5 5 5-5" fill="none" stroke="currentColor" strokeWidth="1.8" />
+          </svg>
+        </div>
+      </div>
+    );
+  }
+
   // Ruka
   if (option.label === "Ruka") {
     return (

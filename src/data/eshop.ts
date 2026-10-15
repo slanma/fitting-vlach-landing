@@ -166,11 +166,18 @@ export const products: Product[] = [
     brand: "Vlach Fitting",
     price: 0,
     priceFrom: false,
-    short: "Hodnotový poukaz na fitting nebo zboží. Platí 12 měsíců, přijde e-mailem k vytištění.",
+    short: "Hodnotový poukaz na golfové poradenství, hole nebo příslušenství. Platí 12 měsíců, přijde e-mailem k vytištění.",
     description:
-      "Dárkový poukaz lze uplatnit na hloubkový fitting, stavbu holí na míru i na příslušenství, a to najednou nebo postupně až do jeho hodnoty. Platí 12 měsíců od vystavení. Po připsání platby ho pošleme e-mailem — otevřete ho, vytisknete nebo uložíte jako PDF a můžete darovat. Jméno obdarovaného a případné věnování napište do poznámky v košíku.",
+      "Dárkový poukaz lze uplatnit na golfové poradenství, golfové hole i golfové příslušenství, a to najednou nebo postupně až do jeho hodnoty. Platí 12 měsíců od vystavení. Po připsání platby ho pošleme e-mailem — otevřete ho, vytisknete nebo uložíte jako PDF a můžete darovat. Jméno obdarovaného a případné věnování napište do poznámky v košíku.",
     // HODNOTY POUKAZŮ — uprav podle potřeby (text volby musí odpovídat klíči v `prices`).
-    options: [{ label: "Hodnota", values: ["1 000 Kč", "2 000 Kč", "3 000 Kč", "5 000 Kč"] }],
+    // „Na co" = účel poukazu, vybírá se roletkou a tiskne se na poukaz (hodnotu nemění).
+    options: [
+      {
+        label: "Na co",
+        values: ["Cokoli z nabídky", "Golfové poradenství", "Golfové hole", "Golfové příslušenství"],
+      },
+      { label: "Hodnota", values: ["1 000 Kč", "2 000 Kč", "3 000 Kč", "5 000 Kč"] },
+    ],
     priceBy: {
       label: "Hodnota",
       prices: { "1 000 Kč": 1000, "2 000 Kč": 2000, "3 000 Kč": 3000, "5 000 Kč": 5000 },

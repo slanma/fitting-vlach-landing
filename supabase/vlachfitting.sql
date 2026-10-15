@@ -48,6 +48,9 @@ create table if not exists public.vf_vouchers (
 
 create index if not exists vf_vouchers_order_idx on public.vf_vouchers (order_id);
 
+-- Účel poukazu z roletky „Na co" (přidáno 10/2026)
+alter table public.vf_vouchers add column if not exists purpose text;
+
 -- Nastavení (bankovní účty apod.) ----------------------------------------
 create table if not exists public.vf_settings (
   key         text primary key,

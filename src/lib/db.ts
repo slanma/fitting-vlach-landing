@@ -121,6 +121,8 @@ export type VoucherRow = {
   remaining: number;
   valid_until: string;
   recipient: string | null;
+  /** Účel z roletky „Na co" (sloupec přidaný 10/2026, u starších poukazů null). */
+  purpose?: string | null;
   status: "aktivni" | "uplatneno" | "zruseno";
   note: string | null;
   created_at: string;
