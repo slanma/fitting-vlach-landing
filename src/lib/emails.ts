@@ -148,7 +148,7 @@ ${preheader ? `<div style="display:none;max-height:0;overflow:hidden;opacity:0;c
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:600px;border-collapse:collapse">
       <tr><td style="padding:0 4px 18px">
         <table role="presentation" cellpadding="0" cellspacing="0" style="border-collapse:collapse"><tr>
-          <td style="padding-right:14px;border-right:1px solid ${C.goldSoft};font-family:${DISPLAY};font-size:22px;font-weight:500;color:${C.ink};letter-spacing:1px">FV</td>
+          <td style="padding-right:14px;border-right:1px solid ${C.goldSoft};font-family:${DISPLAY};font-size:22px;font-weight:500;color:${C.ink};letter-spacing:1px">VF</td>
           <td style="padding-left:14px">
             <div style="font-family:${DISPLAY};font-size:13px;font-weight:600;letter-spacing:3px;color:${C.ink}">VLACH FITTING</div>
             <div style="font-family:${SANS};font-size:10px;letter-spacing:2.5px;color:${C.gold}">GOLF FITTING</div>

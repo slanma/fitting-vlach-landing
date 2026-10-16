@@ -178,7 +178,7 @@ function Page() {
                 onChange={(e) => setVs(e.target.value)}
               />
               <p className="mt-1 text-xs text-muted-foreground">
-                Číslice z čísla objednávky, např. z FV-2608200042.
+                Číslice z čísla objednávky, např. z VF-2608200042.
               </p>
             </div>
 
@@ -189,7 +189,7 @@ function Page() {
               <input
                 id="zprava"
                 className={`${field} mt-2`}
-                placeholder="Objednavka FV-2608200042"
+                placeholder="Objednavka VF-2608200042"
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
               />

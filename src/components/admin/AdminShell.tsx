@@ -24,7 +24,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
       <header className="border-b border-border bg-card">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-5 py-4">
           <Link to="/admin" className="flex items-center gap-3">
-            <span className="font-display text-xl text-ink">FV</span>
+            <span className="font-display text-xl text-ink">VF</span>
             <span className="label-tech">Administrace</span>
           </Link>
           {who && (

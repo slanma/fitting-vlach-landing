@@ -97,7 +97,7 @@ export function buildSpayd({
   return parts.join("*");
 }
 
-/** Číslo objednávky FV-YYMMDDnnnn; číslice slouží i jako variabilní symbol. */
+/** Číslo objednávky VF-YYMMDDnnnn; číslice slouží i jako variabilní symbol. */
 export function newOrderNumber(prefix: string): { order: string; vs: string } {
   const d = new Date();
   const stamp =

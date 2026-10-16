@@ -8,7 +8,7 @@ export function SiteFooter() {
     <footer className="border-t border-border bg-card">
       <div className="mx-auto grid max-w-7xl gap-8 px-5 py-12 md:grid-cols-3 md:px-10">
         <div>
-          <span className="font-display text-lg text-ink">FV</span>
+          <span className="font-display text-lg text-ink">VF</span>
           <p className="mt-2 font-display text-xs uppercase tracking-[0.16em] text-muted-foreground">
             {SITE_NAME}
           </p>

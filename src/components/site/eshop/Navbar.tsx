@@ -26,7 +26,7 @@ export function Navbar() {
       <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-5 py-4 md:px-10">
         <Link to="/" hash="hero" className="flex min-w-0 items-center gap-3">
           <span className="shrink-0 font-display text-2xl leading-none tracking-tight text-ink">
-            FV
+            VF
           </span>
           <span className="min-w-0 border-l border-border pl-3">
             <span className="block truncate font-display text-sm font-medium uppercase tracking-[0.16em] text-ink">

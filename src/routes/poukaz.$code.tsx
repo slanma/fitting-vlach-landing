@@ -67,7 +67,7 @@ function Voucher() {
             <div className="absolute inset-0 bg-gradient-to-r from-ink/80 via-ink/45 to-ink/10" />
             <div className="relative flex h-full items-end justify-between p-8 sm:p-10">
               <div className="flex items-center gap-4 text-white">
-                <span className="font-display text-4xl leading-none">FV</span>
+                <span className="font-display text-4xl leading-none">VF</span>
                 <span className="h-10 w-px bg-gold-soft/70" />
                 <span>
                   <span className="block font-display text-sm font-semibold tracking-[0.3em]">

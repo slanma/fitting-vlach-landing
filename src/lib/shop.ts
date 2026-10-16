@@ -130,7 +130,7 @@ export function paymentsFor(delivery: Delivery | undefined): Payment[] {
 export const PAYMENT_DUE_DAYS = 7;
 
 /** Prefix čísla objednávky. */
-export const ORDER_PREFIX = "FV";
+export const ORDER_PREFIX = "VF";
 
 /** Platnost dárkového poukazu v měsících. */
 export const VOUCHER_VALID_MONTHS = 12;
